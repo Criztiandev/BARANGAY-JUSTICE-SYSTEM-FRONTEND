@@ -8,10 +8,10 @@ import {
   QueryErrorResetBoundary,
 } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import LoadingScreen from "./common/components/helper/loading-screen/index.tsx";
 import App from "./App.tsx";
-import ErrorScreen from "./common/components/helper/error-screen/index.tsx";
 import { Toaster } from "sonner";
+import LoadingScreen from "./common/components/template/helper/loading-screen/index.tsx";
+import ErrorScreen from "./common/components/template/helper/error-screen/index.tsx";
 
 const queryClient = new QueryClient();
 

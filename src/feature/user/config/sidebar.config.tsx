@@ -1,4 +1,4 @@
-import { SidebarMenuItemType } from "@/common/components/layout/sidebar/types";
+import { SidebarMenuItemType } from "@/common/components/organism/layout-bar/sidebar/types";
 import { Home, User } from "lucide-react";
 
 const userSidebarConfig: SidebarMenuItemType[] = [

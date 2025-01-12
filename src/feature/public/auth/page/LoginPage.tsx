@@ -1,8 +1,8 @@
-import InputField from "@/common/components/form/InputField";
-import { Button } from "@/common/components/ui/button";
-import { Checkbox } from "@/common/components/ui/checkbox";
-import { FormBase } from "@/common/components/ui/form";
-import { XStack, YStack } from "@/common/components/ui/stack";
+import InputField from "@/common/components/molecules/form/InputField";
+import { Button } from "@/common/components/atoms/ui/button";
+import { Checkbox } from "@/common/components/atoms/ui/checkbox";
+import { FormBase } from "@/common/components/atoms/ui/form";
+import { XStack, YStack } from "@/common/components/atoms/ui/stack";
 import { useLogin } from "../hooks/mutation";
 
 const LoginPage = () => {
