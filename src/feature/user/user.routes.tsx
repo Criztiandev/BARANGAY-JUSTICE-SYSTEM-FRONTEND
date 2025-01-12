@@ -3,8 +3,10 @@ import UserDashboard from "./page/dashboard";
 import BaseLayout from "@/common/components/template/layout/base-layout";
 import userSidebarConfig from "./config/sidebar.config";
 import userMenuGroups from "./config/menu.config";
-import CaseScreen from "./page/cases";
+import UserCaseScreen from "./page/cases";
 import NotFoundScreen from "@/common/components/template/helper/no-found";
+import UserDocumentScreen from "./page/documents";
+import ActivityScreen from "./page/activity";
 
 const userRoutes = createBrowserRouter([
   {
@@ -17,7 +19,9 @@ const userRoutes = createBrowserRouter([
     ),
     children: [
       { path: "", element: <UserDashboard /> },
-      { path: "cases", element: <CaseScreen /> },
+      { path: "cases", element: <UserCaseScreen /> },
+      { path: "documents", element: <UserDocumentScreen /> },
+      { path: "activity", element: <ActivityScreen /> },
     ],
   },
   { path: "*", element: <NotFoundScreen /> },

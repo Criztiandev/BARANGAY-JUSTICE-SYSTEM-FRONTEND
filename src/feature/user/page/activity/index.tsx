@@ -1,11 +1,10 @@
 import { DataTable } from "@/common/components/molecules/table/data-table";
 import { createColumns, data, filterOptions } from "./columns";
-import CreateCaseSheet from "@/common/components/organism/sheet/case/create-case-sheet";
-import useCreateCase from "../../hooks/case/use-create-case";
-import { FormProvider } from "react-hook-form";
 
-export default function CasesPage() {
-  const { form } = useCreateCase();
+export default function ActivityScreen() {
+  const handleCreate = () => {
+    console.log("Create");
+  };
 
   const columns = createColumns({
     onView: (user) => console.log("View", user),
@@ -23,16 +22,13 @@ export default function CasesPage() {
 
   return (
     <div className="container mx-auto">
-      <FormProvider {...form}>
-        <DataTable
-          data={data}
-          columns={columns}
-          filterOptions={filterOptions}
-          onBulkDelete={handleBulkDelete}
-          onBulkEdit={handleBulkEdit}
-          createButton={<CreateCaseSheet />}
-        />
-      </FormProvider>
+      <DataTable
+        data={data}
+        columns={columns}
+        filterOptions={filterOptions}
+        onBulkDelete={handleBulkDelete}
+        onBulkEdit={handleBulkEdit}
+      />
     </div>
   );
 }

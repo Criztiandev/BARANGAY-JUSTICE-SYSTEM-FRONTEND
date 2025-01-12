@@ -5,3 +5,6 @@
 5. update the compponent json
 6. add a password system to avoid anyone can fork
 7. Fix the base layout because of the sidebar
+8. Sidebar is not fixed interms of selection
+9. multi step hook
+10. Textarea field

@@ -15,6 +15,7 @@ import {
 } from "@/common/components/atoms/ui/select";
 import { ChevronDown, Filter, Plus, Search } from "lucide-react";
 import { Table } from "@tanstack/react-table";
+import { ReactNode } from "react";
 
 interface DataTableActionsProps<TData> {
   table: Table<TData>;
@@ -28,7 +29,7 @@ interface DataTableActionsProps<TData> {
   onBulkDelete?: (selectedRows: TData[]) => void;
   onBulkEdit?: (selectedRows: TData[]) => void;
   handleBulkAction: (action: "delete" | "edit") => void;
-  onCreate?: () => void;
+  createButton?: ReactNode;
 }
 
 export function DataTableActions<TData>({
@@ -40,7 +41,7 @@ export function DataTableActions<TData>({
   onBulkDelete,
   onBulkEdit,
   handleBulkAction,
-  onCreate,
+  createButton,
 }: DataTableActionsProps<TData>) {
   return (
     <div className="flex justify-between items-center">
@@ -92,12 +93,7 @@ export function DataTableActions<TData>({
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-        {onCreate && (
-          <Button onClick={onCreate}>
-            <Plus className="mr-2 h-4 w-4" />
-            Create
-          </Button>
-        )}
+        {createButton && createButton}
       </div>
     </div>
   );

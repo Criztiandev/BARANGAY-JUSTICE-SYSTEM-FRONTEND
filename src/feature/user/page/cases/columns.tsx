@@ -22,36 +22,68 @@ import {
 } from "@/common/components/atoms/ui/dialog";
 import { Label } from "@/common/components/atoms/ui/label";
 import { useState } from "react";
+import UpdateCaseSheet from "@/common/components/organism/sheet/case/update-case-sheet";
+import { ArchiveCaseDialog } from "@/common/components/organism/dialog/case/archive-case-dialog";
+import { Link } from "react-router-dom";
 
-interface User {
+interface Case {
   id: string;
-  name: string;
-  email: string;
-  role: string;
+  caseNumber: string;
+  caseType: string;
+  civilCaseType?: string;
+  criminalCaseType?: string;
+  filingDate: string;
+  caseDescription: string;
+  compliantName: string;
+  compliantEmail: string;
+  respondentName: string;
+  respondentEmail: string;
 }
 
-export const data: User[] = [
+export const data: Case[] = [
   {
     id: "1",
-    name: "John Doe",
-    email: "john@example.com",
-    role: "Admin",
+    caseNumber: "CASE-2024-001",
+    caseType: "Civil Cases",
+    civilCaseType: "UTANG O PAG KAKAUTANG",
+    filingDate: "2024-01-15",
+    caseDescription: "Sample civil case description",
+    compliantName: "John Doe",
+    compliantEmail: "john@example.com",
+    respondentName: "Jane Smith",
+    respondentEmail: "jane@example.com",
   },
   {
     id: "2",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    role: "User",
+    caseNumber: "CASE-2024-002",
+    caseType: "Criminal Cases",
+    criminalCaseType: "THREATS",
+    filingDate: "2024-01-16",
+    caseDescription: "Sample criminal case description",
+    compliantName: "Bob Wilson",
+    compliantEmail: "bob@example.com",
+    respondentName: "Alice Brown",
+    respondentEmail: "alice@example.com",
   },
 ];
 
 export const filterOptions = [
   { label: "All", value: "" },
-  { label: "Admin", value: "admin" },
-  { label: "User", value: "user" },
+  { label: "Civil Cases", value: "civilCases" },
+  { label: "Criminal Cases", value: "criminalCases" },
 ];
 
-export const columns: ColumnDef<User>[] = [
+interface ColumnProps {
+  onView?: (caseData: Case) => void;
+  onEdit?: (caseData: Case) => void;
+  onDelete?: (caseData: Case) => void;
+}
+
+export const createColumns = ({
+  onView,
+  onEdit,
+  onDelete,
+}: ColumnProps): ColumnDef<Case>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -70,60 +102,25 @@ export const columns: ColumnDef<User>[] = [
     ),
   },
   {
-    accessorKey: "name",
-    header: "Name",
+    accessorKey: "caseNumber",
+    header: "Case Number",
     cell: ({ row }) => {
-      const [open, setOpen] = useState(false);
-      const user = row.original;
-
-      return (
-        <div className="text-left">
-          <Button variant="link" onClick={() => setOpen(true)}>
-            {user.name}
-          </Button>
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-              <span className="sr-only">Open dialog</span>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>User Details</DialogTitle>
-                <DialogDescription>
-                  View details for {user.name}
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label className="text-right">Name</Label>
-                  <div className="col-span-3">{user.name}</div>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label className="text-right">Email</Label>
-                  <div className="col-span-3">{user.email}</div>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label className="text-right">Role</Label>
-                  <div className="col-span-3">{user.role}</div>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </div>
-      );
+      const caseData = row.original;
+      return <Link to={`./${caseData.id}`}>{caseData.caseNumber}</Link>;
     },
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "caseType",
+    header: "Case Type",
   },
   {
-    accessorKey: "role",
-    header: "Role",
+    accessorKey: "filingDate",
+    header: "Filing Date",
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const user = row.original;
+      const caseData = row.original;
 
       return (
         <DropdownMenu>
@@ -136,13 +133,34 @@ export const columns: ColumnDef<User>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
+              onClick={() => navigator.clipboard.writeText(caseData.id)}
             >
-              Copy user ID
+              Copy case ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View user details</DropdownMenuItem>
-            <DropdownMenuItem>Edit user</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => onView?.(caseData)}
+              className="font-semibold"
+            >
+              View
+            </DropdownMenuItem>
+
+            <DropdownMenuItem asChild>
+              <UpdateCaseSheet
+                caseId={caseData.id}
+                variant="ghost"
+                label="Update"
+                className="p-0 w-full text-start justify-start px-2"
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <ArchiveCaseDialog
+                caseId={caseData.id}
+                variant="ghost"
+                label="Delete"
+                className="p-0 w-full text-start justify-start px-2"
+              />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
