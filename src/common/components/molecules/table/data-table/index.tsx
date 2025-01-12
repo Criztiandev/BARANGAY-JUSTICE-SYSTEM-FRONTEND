@@ -34,6 +34,7 @@ interface DataTableProps<TData, TValue> {
   filterOptions: FilterOption[];
   onBulkDelete?: (selectedRows: TData[]) => void;
   onBulkEdit?: (selectedRows: TData[]) => void;
+  onCreate?: () => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -42,6 +43,7 @@ export function DataTable<TData, TValue>({
   filterOptions,
   onBulkDelete,
   onBulkEdit,
+  onCreate,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = useState("");
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -100,6 +102,7 @@ export function DataTable<TData, TValue>({
     onBulkDelete,
     onBulkEdit,
     handleBulkAction,
+    onCreate: onCreate,
   };
 
   return (
