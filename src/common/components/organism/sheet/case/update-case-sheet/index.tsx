@@ -13,17 +13,43 @@ import CompliantInfoStep from "./steps/compliant-info-step";
 import RespondentInfoStep from "./steps/respondent-info-step";
 import OtherInfoStep from "./steps/other-info-step";
 import { XStack } from "@/common/components/atoms/ui/stack";
+import { memo, useCallback } from "react";
 
 interface Props extends ButtonProps {
   label?: string;
   caseId: string;
 }
 
-const UpdateCaseSheet = ({ caseId, label, ...props }: Props) => {
-  const { step, isFirstStep, isLastStep, next, back, currentStepIndex, steps } =
+const UpdateCaseSheet = memo(function UpdateCaseSheet({
+  caseId,
+  label,
+  ...props
+}: Props) {
+  const steps = [
+    <CompliantInfoStep />,
+    <RespondentInfoStep />,
+    <OtherInfoStep />,
+  ];
+
+  const { step, isFirstStep, isLastStep, next, back, currentStepIndex } =
     useMultiStepForm({
-      steps: [<CompliantInfoStep />, <RespondentInfoStep />, <OtherInfoStep />],
+      steps,
     });
+
+  const getStepTitle = useCallback(() => {
+    if (isFirstStep) return "Compliant Information";
+    if (isLastStep) return "Other Information";
+    return "Respondent Information";
+  }, [isFirstStep, isLastStep]);
+
+  const handleNext = useCallback(() => {
+    next();
+  }, [next]);
+
+  const handleBack = useCallback(() => {
+    back();
+  }, [back]);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -32,13 +58,7 @@ const UpdateCaseSheet = ({ caseId, label, ...props }: Props) => {
       <SheetContent>
         <SheetHeader>
           <SheetTitle className="flex justify-between items-center">
-            <span>
-              {isFirstStep
-                ? "Compliant Information"
-                : isLastStep
-                ? "Other Information"
-                : "Respondent Information"}
-            </span>
+            <span>{getStepTitle()}</span>
             <span className="text-sm text-muted-foreground pr-6">
               {currentStepIndex + 1} / {steps.length}
             </span>
@@ -50,16 +70,17 @@ const UpdateCaseSheet = ({ caseId, label, ...props }: Props) => {
         <div className="space-y-2 mb-4">{step}</div>
         <SheetFooter>
           <XStack className="justify-between space-x-2">
-            <Button variant="outline" onClick={back}>
+            <Button variant="outline" onClick={handleBack}>
               Back
             </Button>
-            <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button>
+            <Button onClick={handleNext}>
+              {isLastStep ? "Submit" : "Next"}
+            </Button>
           </XStack>
         </SheetFooter>
       </SheetContent>
     </Sheet>
   );
-};
+});
 
-interface Props {}
 export default UpdateCaseSheet;

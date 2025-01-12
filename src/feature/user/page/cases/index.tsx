@@ -7,11 +7,7 @@ import { FormProvider } from "react-hook-form";
 export default function CasesPage() {
   const { form } = useCreateCase();
 
-  const columns = createColumns({
-    onView: (user) => console.log("View", user),
-    onEdit: (user) => console.log("Edit", user),
-    onDelete: (user) => console.log("Delete", user),
-  });
+  const columns = createColumns();
 
   const handleBulkDelete = (selectedRows: any[]) => {
     console.log("Bulk delete selected rows:", selectedRows);
@@ -22,17 +18,19 @@ export default function CasesPage() {
   };
 
   return (
-    <div className="container mx-auto">
-      <FormProvider {...form}>
-        <DataTable
-          data={data}
-          columns={columns}
-          filterOptions={filterOptions}
-          onBulkDelete={handleBulkDelete}
-          onBulkEdit={handleBulkEdit}
-          createButton={<CreateCaseSheet />}
-        />
-      </FormProvider>
-    </div>
+    <>
+      <div className="container mx-auto">
+        <FormProvider {...form}>
+          <DataTable
+            data={data}
+            columns={columns}
+            filterOptions={filterOptions}
+            onBulkDelete={handleBulkDelete}
+            onBulkEdit={handleBulkEdit}
+            createButton={<CreateCaseSheet />}
+          />
+        </FormProvider>
+      </div>
+    </>
   );
 }

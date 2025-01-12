@@ -10,18 +10,21 @@ import {
   AlertDialogTrigger,
 } from "@/common/components/atoms/ui/alert-dialog";
 import { Button, ButtonProps } from "@/common/components/atoms/ui/button";
+import { memo, useCallback } from "react";
 
 interface Props extends ButtonProps {
   caseId: string;
   label?: string;
 }
 
-export function ArchiveCaseDialog({ caseId, label, ...props }: Props) {
-  console.log("caseId", caseId);
-
-  const handleArchive = () => {
+export const ArchiveCaseDialog = memo(function ArchiveCaseDialog({
+  caseId,
+  label,
+  ...props
+}: Props) {
+  const handleArchive = useCallback(() => {
     console.log("Archive case", caseId);
-  };
+  }, [caseId]);
 
   return (
     <AlertDialog>
@@ -45,4 +48,4 @@ export function ArchiveCaseDialog({ caseId, label, ...props }: Props) {
       </AlertDialogContent>
     </AlertDialog>
   );
-}
+});
