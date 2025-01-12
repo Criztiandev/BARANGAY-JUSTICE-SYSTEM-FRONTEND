@@ -60,23 +60,22 @@ const BaseLayout = ({ sidebarConfig, menuGroups }: BaseLayoutProps) => {
       );
     }
 
-    // Return null if item is not a valid menu item
     return null;
   };
 
   return (
     <SidebarProvider>
-      <div className="border w-full">
+      <div className="flex flex-col h-screen w-full">
         <Topbar menuGroups={menuGroups} />
-        <div className="border min-h-screen">
-          <SideBar className=" h-[calc(100vh-3.2rem)] mt-[3.2rem]">
+        <div className="flex flex-1 overflow-hidden  w-full">
+          <SideBar className="h-full mt-[3.2rem]">
             <SidebarGroup label="Main menu">
               <SidebarMenu>{sidebarConfig.map(renderMenuItem)}</SidebarMenu>
             </SidebarGroup>
           </SideBar>
-          <div className="w-full pt-[3.2rem] pl-[--sidebar-width]">
+          <main className="flex-1 overflow-auto  p-4  pt-[4.2rem] w-full">
             <Outlet />
-          </div>
+          </main>
         </div>
       </div>
     </SidebarProvider>

@@ -54,21 +54,6 @@ export function DataTableActions<TData>({
         />
       </div>
       <div className="flex items-center space-x-2">
-        <Select
-          value={pageSize.toString()}
-          onValueChange={(value) => setPageSize(Number(value))}
-        >
-          <SelectTrigger className="w-[100px]">
-            <SelectValue placeholder="Rows per page" />
-          </SelectTrigger>
-          <SelectContent>
-            {[10, 20, 30, 50, 100].map((size) => (
-              <SelectItem key={size} value={size.toString()}>
-                {size} rows
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline">

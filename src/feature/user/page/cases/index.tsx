@@ -11,7 +11,7 @@ export default function CasesPage() {
   };
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto">
       <DataTable
         data={data}
         columns={columns}

@@ -24,6 +24,7 @@ const App = () => {
   }, [credentials]);
 
   if (!router) return <LoadingScreen />;
+
   return <RouterProvider router={router} />;
 };
 
