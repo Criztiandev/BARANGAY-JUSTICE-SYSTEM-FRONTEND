@@ -1,7 +1,6 @@
 "use client";
 
-import { ColumnDef, Row, Table } from "@tanstack/react-table";
-import { useMemo } from "react";
+import { Row, Table } from "@tanstack/react-table";
 import CaseColumnActionCell from "@/common/components/molecules/table/case/cells/case-column-action-cell";
 import { Checkbox } from "@/common/components/atoms/ui/checkbox";
 import { Link } from "react-router-dom";
@@ -53,56 +52,47 @@ export const filterOptions = [
   { label: "Criminal Cases", value: "criminalCases" },
 ];
 
-export const createColumns = (): ColumnDef<Case>[] => {
-  const columns = useMemo(
-    () => [
-      {
-        id: "select",
-        header: ({ table }: { table: Table<Case> }) => (
-          <Checkbox
-            checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value) =>
-              table.toggleAllPageRowsSelected(!!value)
-            }
-            aria-label="Select all"
-          />
-        ),
-        cell: ({ row }: { row: Row<Case> }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-          />
-        ),
-      },
-      {
-        accessorKey: "caseNumber",
-        header: "Case Number",
-        cell: ({ row }: { row: Row<Case> }) => (
-          <Link to={`/cases/${row.original.id}`}>
-            <span className="font-semibold hover:underline">
-              {row.original.caseNumber}
-            </span>
-          </Link>
-        ),
-      },
-      {
-        accessorKey: "caseType",
-        header: "Case Type",
-      },
-      {
-        accessorKey: "filingDate",
-        header: "Filing Date",
-      },
-      {
-        id: "actions",
-        cell: ({ row }: { row: Row<Case> }) => (
-          <CaseColumnActionCell caseData={row.original} />
-        ),
-      },
-    ],
-    []
-  );
-
-  return columns;
-};
+export const CaseTableColumn = [
+  {
+    id: "select",
+    header: ({ table }: { table: Table<Case> }) => (
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }: { row: Row<Case> }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+  },
+  {
+    accessorKey: "caseNumber",
+    header: "Case Number",
+    cell: ({ row }: { row: Row<Case> }) => (
+      <Link to={`/cases/${row.original.id}`}>
+        <span className="font-semibold hover:underline">
+          {row.original.caseNumber}
+        </span>
+      </Link>
+    ),
+  },
+  {
+    accessorKey: "caseType",
+    header: "Case Type",
+  },
+  {
+    accessorKey: "filingDate",
+    header: "Filing Date",
+  },
+  {
+    id: "actions",
+    cell: ({ row }: { row: Row<Case> }) => (
+      <CaseColumnActionCell caseData={row.original} />
+    ),
+  },
+];

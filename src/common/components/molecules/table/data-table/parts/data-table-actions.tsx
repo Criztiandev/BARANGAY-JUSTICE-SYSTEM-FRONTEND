@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/common/components/atoms/ui/select";
-import { ChevronDown, Filter, Plus, Search } from "lucide-react";
+import { ChevronDown, Filter, Plus, Search, Settings } from "lucide-react";
 import { Table } from "@tanstack/react-table";
 import { ReactNode } from "react";
 
@@ -73,14 +73,16 @@ export function DataTableActions<TData>({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {createButton && createButton}
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline">
-              Actions
-              <ChevronDown className="ml-2 h-4 w-4" />
+            <Button variant="outline" size="icon">
+              <Settings />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent align="end">
             {onBulkDelete && (
               <DropdownMenuItem onSelect={() => handleBulkAction("delete")}>
                 Bulk Delete
@@ -93,7 +95,6 @@ export function DataTableActions<TData>({
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-        {createButton && createButton}
       </div>
     </div>
   );

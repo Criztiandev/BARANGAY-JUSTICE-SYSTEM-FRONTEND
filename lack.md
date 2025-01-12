@@ -8,3 +8,6 @@
 8. Sidebar is not fixed interms of selection
 9. multi step hook
 10. Textarea field
+11. Option screen for system options
+12. Date picket controlled and not controlled
+13. Charts integrations and easy to create

@@ -10,13 +10,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/common/components/atoms/ui/dropdown-menu";
-import { ArchiveCaseDialog } from "@/common/components/organism/dialog/case/archive-case-dialog";
-import UpdateCaseSheet from "@/common/components/organism/sheet/case/update-case-sheet";
+import { Case } from "@/feature/user/interface/case";
 
-const CaseColumnActionCell = memo(function ActionsCell({
+export const RecentCaseDataTableActionCell = memo(function ActionsCell({
   caseData,
 }: {
-  caseData: any;
+  caseData: Case;
 }) {
   const router = useNavigate();
 
@@ -46,25 +45,7 @@ const CaseColumnActionCell = memo(function ActionsCell({
         >
           <span className="font-semibold">View</span>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <UpdateCaseSheet
-            caseId={caseData.id}
-            className="w-full justify-start font-semibold cursor-pointer"
-            variant="ghost"
-            label="Update"
-          />
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <ArchiveCaseDialog
-            caseId={caseData.id}
-            className="w-full justify-start font-semibold cursor-pointer"
-            variant="ghost"
-            label="Archive"
-          />
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 });
-
-export default CaseColumnActionCell;

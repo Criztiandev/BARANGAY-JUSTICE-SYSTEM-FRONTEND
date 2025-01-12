@@ -23,7 +23,7 @@ import { ArrowUpDown } from "lucide-react";
 import DataTablePagination from "./parts/data-table-pagination";
 import { DataTableActions } from "./parts/data-table-actions";
 
-interface FilterOption {
+export interface DataTableFilterOption {
   label: string;
   value: string;
 }
@@ -31,7 +31,7 @@ interface FilterOption {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  filterOptions: FilterOption[];
+  filterOptions: DataTableFilterOption[];
   onBulkDelete?: (selectedRows: TData[]) => void;
   onBulkEdit?: (selectedRows: TData[]) => void;
   createButton?: ReactNode;

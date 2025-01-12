@@ -7,6 +7,7 @@ import UserCaseScreen from "./page/cases";
 import NotFoundScreen from "@/common/components/template/helper/no-found";
 import UserDocumentScreen from "./page/documents";
 import ActivityScreen from "./page/activity";
+import CaseDetailsScreen from "./page/case-details";
 
 const userRoutes = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const userRoutes = createBrowserRouter([
       { path: "", element: <UserDashboard /> },
       { path: "cases", element: <UserCaseScreen /> },
       { path: "documents", element: <UserDocumentScreen /> },
+      { path: "cases/:id", element: <CaseDetailsScreen /> },
       { path: "activity", element: <ActivityScreen /> },
     ],
   },
