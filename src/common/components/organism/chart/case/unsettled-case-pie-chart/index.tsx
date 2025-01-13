@@ -1,5 +1,4 @@
 import CaseBadge from "@/common/components/atoms/badge/case/case-badge";
-import { Badge } from "@/common/components/atoms/ui/badge";
 import {
   Card,
   CardContent,
@@ -8,14 +7,6 @@ import {
   CardTitle,
 } from "@/common/components/atoms/ui/card";
 import { ChartConfig } from "@/common/components/atoms/ui/chart";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/common/components/atoms/ui/select";
-import { XStack } from "@/common/components/atoms/ui/stack";
 import DonutChart from "@/common/components/molecules/chart/donut-chart";
 
 const chartData = [

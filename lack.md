@@ -11,3 +11,4 @@
 11. Option screen for system options
 12. Date picket controlled and not controlled
 13. Charts integrations and easy to create
+14. add a ci/cd for deployment and testing
