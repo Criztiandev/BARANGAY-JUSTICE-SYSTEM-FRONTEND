@@ -3,12 +3,14 @@ import { Case } from "../interface/case";
 import columnBuilder from "@/utils/table/column-builder.ts";
 import ActionColumn from "@/common/components/molecules/table/columns/action-column";
 import { DownloadIcon } from "lucide-react";
+import TextColumn from "@/common/components/molecules/table/columns/text-input-column";
 
 const caseColumns = columnBuilder<Case>([
   {
     id: "caseNumber",
     accessorKey: "caseNumber",
     header: "Case Number",
+    cell: (props) => <TextColumn {...props} />,
   },
   {
     id: "caseType",
@@ -40,11 +42,6 @@ const caseColumns = columnBuilder<Case>([
     cell: () => {
       return (
         <ActionColumn
-          defaultActions={{
-            view: {
-              isStashed: true,
-            },
-          }}
           actions={[
             {
               icon: <DownloadIcon size={16} />,
