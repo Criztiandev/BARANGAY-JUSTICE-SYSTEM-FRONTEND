@@ -4,7 +4,7 @@ import columnBuilder from "@/utils/table/column-builder.ts";
 import ActionColumn from "@/common/components/molecules/table/columns/action-column";
 import { DownloadIcon } from "lucide-react";
 import TextColumn from "@/common/components/molecules/table/columns/text-input-column";
-import ImageColumn from "@/common/components/molecules/table/columns/image-column";
+import ColorColumn from "@/common/components/molecules/table/columns/color-column";
 
 const caseColumns = columnBuilder<Case>([
   {
@@ -18,56 +18,32 @@ const caseColumns = columnBuilder<Case>([
     accessorKey: "caseType",
     header: "Case Type",
     cell: (props) => (
-      <ImageColumn
-        sections={[
+      <ColorColumn
+        {...props}
+        colors={[
           {
-            type: "badge",
-            value: "Test",
+            color: "#FF5733",
+            tooltip: "Primary",
+            onClick: () => console.log("primary clicked"),
           },
           {
-            type: "link",
-            value: "Test",
-            href: "https://www.google.com",
-            icon: "ExternalLink",
+            color: "#33FF57",
+            tooltip: "Secondary",
+            onClick: () => console.log("secondary clicked"),
           },
           {
-            type: "custom",
-            component: <div>Test</div>,
-          },
-        ]}
-        avatars={[
-          {
-            src: "https://via.placeholder.com/150",
-            fallback: "Test",
-            onClick: () => {
-              alert("Hi");
-            },
+            color: "#5733FF",
+            tooltip: "Accent",
+            onClick: () => console.log("accent clicked"),
           },
           {
-            src: "https://via.placeholder.com/150",
-            fallback: "Test",
-            onClick: () => {
-              alert("Hi");
-            },
-          },
-          {
-            src: "https://via.placeholder.com/150",
-            fallback: "Test",
-            onClick: () => {
-              alert("Hi");
-            },
-          },
-          {
-            src: "https://via.placeholder.com/150",
-            fallback: "Test",
-            onClick: () => {
-              alert("Hi");
-            },
+            color: "#FF33F5",
+            tooltip: "Extra Color",
           },
         ]}
         stackLimit={3}
-        stackClassName="gap-2"
-        {...props}
+        size="md"
+        shape="rounded"
       />
     ),
   },
