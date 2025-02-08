@@ -1,8 +1,27 @@
 import { DataTable } from "@/common/components/molecules/table/data-table";
-import { CaseTableColumn, data, filterOptions } from "./columns";
 import CreateCaseSheet from "@/common/components/organism/sheet/case/create-case-sheet";
 import useCreateCase from "../../hooks/case/use-create-case";
 import { FormProvider } from "react-hook-form";
+import { filterOptions } from "../documents/columns";
+import caseColumns from "../../config/table.config";
+
+export const data: any[] = [
+  {
+    id: "1",
+    caseNumber: "#2332",
+    caseType: "Civil",
+    filingDate: "2024-01-01",
+    status: "Active",
+    actions: "Actions",
+  },
+  {
+    id: "2",
+    caseNumber: "#2432",
+    caseType: "Not Civil",
+    filingDate: "2024-01-01",
+    status: "Active",
+  },
+];
 
 export default function CasesPage() {
   const { form } = useCreateCase();
@@ -23,7 +42,7 @@ export default function CasesPage() {
       <FormProvider {...form}>
         <DataTable
           data={data}
-          columns={CaseTableColumn}
+          columns={caseColumns}
           filterOptions={filterOptions}
           onBulkDelete={handleBulkDelete}
           onBulkEdit={handleBulkEdit}

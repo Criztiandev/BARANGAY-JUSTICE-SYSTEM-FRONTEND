@@ -1,3 +1,4 @@
+// components/DataTableActions.tsx
 import { Button } from "@/common/components/atoms/ui/button";
 import {
   DropdownMenu,
@@ -6,14 +7,7 @@ import {
   DropdownMenuItem,
 } from "@/common/components/atoms/ui/dropdown-menu";
 import { Input } from "@/common/components/atoms/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/common/components/atoms/ui/select";
-import { ChevronDown, Filter, Plus, Search, Settings } from "lucide-react";
+import { Filter, Search, Trash2, Edit } from "lucide-react";
 import { Table } from "@tanstack/react-table";
 import { ReactNode } from "react";
 
@@ -21,18 +15,16 @@ interface DataTableActionsProps<TData> {
   table: Table<TData>;
   globalFilter: string;
   setGlobalFilter: (value: string) => void;
-  pageSize: number;
-  setPageSize: (size: number) => void;
   selectedFilter: string;
   filterOptions: Array<{ label: string; value: string }>;
   handleFilterSelect: (value: string) => void;
   onBulkDelete?: (selectedRows: TData[]) => void;
   onBulkEdit?: (selectedRows: TData[]) => void;
-  handleBulkAction: (action: "delete" | "edit") => void;
   createButton?: ReactNode;
 }
 
 export function DataTableActions<TData>({
+  table,
   globalFilter,
   setGlobalFilter,
   selectedFilter,
@@ -40,26 +32,31 @@ export function DataTableActions<TData>({
   handleFilterSelect,
   onBulkDelete,
   onBulkEdit,
-  handleBulkAction,
   createButton,
 }: DataTableActionsProps<TData>) {
+  const selectedRows = table.getSelectedRowModel().rows;
+  const hasSelectedRows = selectedRows.length > 0;
+
   return (
-    <div className="flex justify-between items-center">
-      <div className="relative w-72">
-        <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search..."
-          value={globalFilter ?? ""}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          className="pl-8"
-        />
-      </div>
-      <div className="flex items-center space-x-2">
+    <div className="flex justify-between items-center gap-4 mb-4">
+      <div className="flex items-center gap-4">
+        <div className="relative w-72">
+          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search all columns..."
+            value={globalFilter ?? ""}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            className="pl-8"
+          />
+        </div>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline">
+            <Button variant="outline" className="min-w-[120px]">
               <Filter className="mr-2 h-4 w-4" />
-              {selectedFilter || "Filter"}
+              {selectedFilter
+                ? filterOptions.find((f) => f.value === selectedFilter)?.label
+                : "All Cases"}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -73,28 +70,39 @@ export function DataTableActions<TData>({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
+      </div>
 
-        {createButton && createButton}
+      <div className="flex items-center gap-2">
+        {createButton}
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
-              <Settings />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {onBulkDelete && (
-              <DropdownMenuItem onSelect={() => handleBulkAction("delete")}>
-                Bulk Delete
-              </DropdownMenuItem>
-            )}
+        {hasSelectedRows && (
+          <div className="flex items-center gap-2">
             {onBulkEdit && (
-              <DropdownMenuItem onSelect={() => handleBulkAction("edit")}>
-                Bulk Edit
-              </DropdownMenuItem>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  onBulkEdit(selectedRows.map((row) => row.original))
+                }
+              >
+                <Edit className="h-4 w-4 mr-2" />
+                Edit Selected
+              </Button>
             )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+            {onBulkDelete && (
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() =>
+                  onBulkDelete(selectedRows.map((row) => row.original))
+                }
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete Selected
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

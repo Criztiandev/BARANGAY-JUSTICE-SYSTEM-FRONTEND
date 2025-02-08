@@ -10,4 +10,5 @@ export interface Case {
   compliantEmail: string;
   respondentName: string;
   respondentEmail: string;
+  status: "Active" | "Inactive";
 }

@@ -1,36 +1,38 @@
-import { SidebarMenuItemType } from "@/common/components/organism/layout-bar/sidebar/types";
+import { MenuItem } from "@/common/components/organism/layout-bar/sidebar/types";
 import { Files, Home, MessageCircle, User } from "lucide-react";
 
-const userSidebarConfig: SidebarMenuItemType[] = [
+const userSidebarConfig: MenuItem[] = [
   {
-    type: "item",
+    id: "home",
     title: "Home",
-    href: "/",
     icon: Home,
+    href: "/",
   },
   {
-    type: "item",
+    id: "cases",
     title: "Cases",
+    icon: User,
     href: "/cases",
-    icon: User,
   },
+
   {
-    type: "item",
-    title: "Message",
-    href: "/message",
+    id: "messages",
+    title: "Messages",
     icon: MessageCircle,
+    href: "/messages",
   },
+
   {
-    type: "item",
+    id: "documents",
     title: "Documents",
-    href: "/documents",
     icon: Files,
+    href: "/documents",
   },
   {
-    type: "item",
+    id: "activity",
     title: "Activity",
-    href: "/activity",
     icon: User,
+    href: "/activity",
   },
 ];
 
