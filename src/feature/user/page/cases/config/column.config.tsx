@@ -1,5 +1,5 @@
 import { Badge } from "@/common/components/atoms/ui/badge";
-import { Case } from "../interface/case";
+import { Case } from "../../../interface/case";
 import columnBuilder from "@/utils/table/column-builder.ts";
 import ActionColumn from "@/common/components/molecules/table/columns/action-column";
 import { DownloadIcon } from "lucide-react";
