@@ -1,6 +1,5 @@
 import { cn } from "@/common/lib/utils";
 import { CellContext } from "@tanstack/react-table";
-import { Eye } from "lucide-react";
 import { Badge } from "@/common/components/atoms/ui/badge";
 
 const currencyList = {

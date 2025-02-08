@@ -5,7 +5,7 @@ import {
 } from "../ui/avatar";
 import { cn } from "@/common/lib/utils";
 
-interface AvatarProps {
+export interface AvatarProps {
   src: string;
   fallback: string;
   className?: string;

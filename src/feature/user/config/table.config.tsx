@@ -4,6 +4,7 @@ import columnBuilder from "@/utils/table/column-builder.ts";
 import ActionColumn from "@/common/components/molecules/table/columns/action-column";
 import { DownloadIcon } from "lucide-react";
 import TextColumn from "@/common/components/molecules/table/columns/text-input-column";
+import IconColumn from "@/common/components/molecules/table/columns/icon-column";
 
 const caseColumns = columnBuilder<Case>([
   {
@@ -16,12 +17,16 @@ const caseColumns = columnBuilder<Case>([
     id: "caseType",
     accessorKey: "caseType",
     header: "Case Type",
+    cell: (props) => (
+      <IconColumn icon="User" labelClassName="text-red-500" {...props} />
+    ),
   },
   {
     id: "filingDate",
     accessorKey: "filingDate",
     header: "Filing Date",
   },
+
   {
     id: "status",
     accessorKey: "status",
