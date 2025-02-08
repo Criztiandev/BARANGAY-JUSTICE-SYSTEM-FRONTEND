@@ -4,7 +4,7 @@ import columnBuilder from "@/utils/table/column-builder.ts";
 import ActionColumn from "@/common/components/molecules/table/columns/action-column";
 import { DownloadIcon } from "lucide-react";
 import TextColumn from "@/common/components/molecules/table/columns/text-input-column";
-import IconColumn from "@/common/components/molecules/table/columns/icon-column";
+import ImageColumn from "@/common/components/molecules/table/columns/image-column";
 
 const caseColumns = columnBuilder<Case>([
   {
@@ -18,7 +18,57 @@ const caseColumns = columnBuilder<Case>([
     accessorKey: "caseType",
     header: "Case Type",
     cell: (props) => (
-      <IconColumn icon="User" labelClassName="text-red-500" {...props} />
+      <ImageColumn
+        sections={[
+          {
+            type: "badge",
+            value: "Test",
+          },
+          {
+            type: "link",
+            value: "Test",
+            href: "https://www.google.com",
+            icon: "ExternalLink",
+          },
+          {
+            type: "custom",
+            component: <div>Test</div>,
+          },
+        ]}
+        avatars={[
+          {
+            src: "https://via.placeholder.com/150",
+            fallback: "Test",
+            onClick: () => {
+              alert("Hi");
+            },
+          },
+          {
+            src: "https://via.placeholder.com/150",
+            fallback: "Test",
+            onClick: () => {
+              alert("Hi");
+            },
+          },
+          {
+            src: "https://via.placeholder.com/150",
+            fallback: "Test",
+            onClick: () => {
+              alert("Hi");
+            },
+          },
+          {
+            src: "https://via.placeholder.com/150",
+            fallback: "Test",
+            onClick: () => {
+              alert("Hi");
+            },
+          },
+        ]}
+        stackLimit={3}
+        stackClassName="gap-2"
+        {...props}
+      />
     ),
   },
   {
