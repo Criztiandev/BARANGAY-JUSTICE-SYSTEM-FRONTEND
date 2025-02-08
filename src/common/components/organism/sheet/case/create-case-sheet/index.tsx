@@ -1,13 +1,13 @@
 import { Button } from "@/common/components/atoms/ui/button";
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/common/components/atoms/ui/sheet";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/common/components/atoms/ui/dialog";
 
 import useMultiStepForm from "@/common/hooks/form/use-multi-step-form";
 import CompliantInfoStep from "./steps/compliant-info-step";
@@ -18,42 +18,55 @@ import { XStack } from "@/common/components/atoms/ui/stack";
 const CreateCaseSheet = () => {
   const { step, isFirstStep, isLastStep, next, back, currentStepIndex, steps } =
     useMultiStepForm({
-      steps: [<CompliantInfoStep />, <RespondentInfoStep />, <OtherInfoStep />],
+      steps: [
+        <CompliantInfoStep key={"compliant"} />,
+        <RespondentInfoStep key={"respondent"} />,
+        <OtherInfoStep key={"other"} />,
+      ],
     });
+
+  const stepTitle = () => {
+    if (isFirstStep) {
+      return "Compliant Information";
+    }
+
+    if (isLastStep) {
+      return "Other Information";
+    }
+
+    return "Respondent Information";
+  };
+
   return (
-    <Sheet>
-      <SheetTrigger asChild>
+    <Dialog>
+      <DialogTrigger asChild>
         <Button>Create</Button>
-      </SheetTrigger>
-      <SheetContent className="px-4 max-w-2xl min-w-[500px]">
-        <SheetHeader>
-          <SheetTitle className="flex justify-between items-center">
-            <span>
-              {isFirstStep
-                ? "Compliant Information"
-                : isLastStep
-                ? "Other Information"
-                : "Respondent Information"}
-            </span>
+      </DialogTrigger>
+      <DialogContent className="px-4 max-w-2xl min-w-[500px]">
+        <DialogHeader>
+          <DialogTitle className="flex justify-between items-center">
+            <span>{stepTitle()}</span>
             <span className="text-sm text-muted-foreground pr-6">
               {currentStepIndex + 1} / {steps.length}
             </span>
-          </SheetTitle>
-          <SheetDescription>
+          </DialogTitle>
+          <DialogDescription>
             Make changes to your profile here. Click save when you're done.
-          </SheetDescription>
-        </SheetHeader>
+          </DialogDescription>
+        </DialogHeader>
         <div className="space-y-2 mb-4">{step}</div>
-        <SheetFooter>
+        <DialogFooter>
           <XStack className="justify-between space-x-2">
-            <Button variant="outline" onClick={back}>
-              Back
-            </Button>
+            {!isFirstStep && (
+              <Button variant="outline" onClick={back}>
+                Back
+              </Button>
+            )}
             <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button>
           </XStack>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

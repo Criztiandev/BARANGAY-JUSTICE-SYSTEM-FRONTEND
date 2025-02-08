@@ -10,38 +10,40 @@ const RespondentInfoStep = () => {
         placeholder="Enter respondent full name"
       />
 
-      <InputField
-        type="email"
-        label="Email"
-        name="respondentEmail"
-        placeholder="Enter respondent email"
-      />
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <InputField
+          type="email"
+          label="Email"
+          name="respondentEmail"
+          placeholder="Enter respondent email"
+        />
 
-      <InputField
-        type="number"
-        label="Age"
-        name="respondentAge"
-        placeholder="Enter respondent age"
-      />
+        <InputField
+          type="number"
+          label="Age"
+          name="respondentAge"
+          placeholder="Enter respondent age"
+        />
 
-      <InputField
-        type="tel"
-        label="Phone Number"
-        name="respondentPhoneNumber"
-        placeholder="Enter respondent phone number"
-      />
+        <InputField
+          type="tel"
+          label="Phone Number"
+          name="respondentPhoneNumber"
+          placeholder="Enter respondent phone number"
+        />
 
-      <SelectField
-        label="Gender"
-        placeholder="Select respondent gender"
-        options={[{ label: "Male", value: "male" }]}
-      />
+        <SelectField
+          label="Gender"
+          placeholder="Select respondent gender"
+          options={[{ label: "Male", value: "male" }]}
+        />
 
-      <InputField
-        label="Address"
-        name="respondentAddress"
-        placeholder="Enter respondent Address"
-      />
+        <InputField
+          label="Address"
+          name="respondentAddress"
+          placeholder="Enter respondent Address"
+        />
+      </div>
     </div>
   );
 };

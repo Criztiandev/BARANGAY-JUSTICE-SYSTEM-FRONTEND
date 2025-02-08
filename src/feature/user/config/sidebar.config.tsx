@@ -1,5 +1,5 @@
 import { SidebarMenuItemType } from "@/common/components/organism/layout-bar/sidebar/types";
-import { Files, Home, User } from "lucide-react";
+import { Files, Home, MessageCircle, User } from "lucide-react";
 
 const userSidebarConfig: SidebarMenuItemType[] = [
   {
@@ -13,6 +13,12 @@ const userSidebarConfig: SidebarMenuItemType[] = [
     title: "Cases",
     href: "/cases",
     icon: User,
+  },
+  {
+    type: "item",
+    title: "Message",
+    href: "/message",
+    icon: MessageCircle,
   },
   {
     type: "item",

@@ -12,6 +12,7 @@ import App from "./App.tsx";
 import { Toaster } from "sonner";
 import LoadingScreen from "./common/components/template/helper/loading-screen/index.tsx";
 import ErrorScreen from "./common/components/template/helper/error-screen/index.tsx";
+import { ThemeProvider } from "./common/components/template/providers/theme-provider/index.tsx";
 
 const queryClient = new QueryClient();
 
@@ -27,8 +28,10 @@ createRoot(document.getElementById("root")!).render(
                 <ErrorScreen onReset={resetErrorBoundary} />
               )}
             >
-              <Toaster />
-              <App />
+              <ThemeProvider>
+                <Toaster />
+                <App />
+              </ThemeProvider>
             </ErrorBoundary>
           )}
         </QueryErrorResetBoundary>

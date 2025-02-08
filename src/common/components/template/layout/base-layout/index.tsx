@@ -1,79 +1,70 @@
-import { Outlet } from "react-router-dom";
-import SideBar, {
-  SidebarGroup,
-  SidebarMenuItem,
-  SidebarCollapsibleMenuItem,
-  SidebarSubMenuItem,
-} from "../../../organism/layout-bar/sidebar";
-import Topbar from "../../../organism/layout-bar/topbar";
+import { Outlet, useLocation } from "react-router-dom";
 import {
-  SidebarMenu,
+  Sidebar,
+  SidebarGroup,
   SidebarProvider,
 } from "@/common/components/atoms/ui/sidebar";
-import { SidebarMenuItemType } from "../../../organism/layout-bar/sidebar/types";
+import { MenuItem } from "../../../organism/layout-bar/sidebar/types";
 import { MenuGroupType } from "../../../atoms/avatar/AvatarMenu";
+import Topbar from "../../../organism/layout-bar/topbar";
+import { NestedSidebar } from "../../../organism/layout-bar/sidebar/index";
+import { Input } from "@/common/components/atoms/ui/input";
+
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/common/components/atoms/ui/breadcrumb";
 
 interface BaseLayoutProps {
   menuGroups: MenuGroupType[];
-  sidebarConfig: SidebarMenuItemType[];
+  sidebarConfig: MenuItem[];
 }
 
 const BaseLayout = ({ sidebarConfig, menuGroups }: BaseLayoutProps) => {
-  const userRole = "admin"; // Example role
+  const userRole = "admin"; // Example role, you might want to get this from your auth context
 
-  const renderMenuItem = (item: SidebarMenuItemType) => {
-    // Check if user has permission to see this item
-    if (item.roles && !item.roles.includes(userRole)) {
-      return null;
-    }
+  const location = useLocation();
+  const pathname = location.pathname;
 
-    // Render item if it is a menu item
-    if (item.type === "item") {
-      return (
-        <SidebarMenuItem
-          key={item.href}
-          href={item.href}
-          title={item.title}
-          icon={item.icon && <item.icon size={18} />}
-        />
-      );
-    }
-
-    // Render item if it is a collapsible menu item
-    if (item.type === "collapsible") {
-      return (
-        <SidebarCollapsibleMenuItem
-          key={item.title}
-          title={item.title}
-          icon={item.icon && <item.icon size={18} />}
-        >
-          <SidebarMenu>
-            {item.children.map((subItem) => (
-              <SidebarSubMenuItem
-                key={subItem.href}
-                title={subItem.title}
-                href={subItem.href}
-              />
-            ))}
-          </SidebarMenu>
-        </SidebarCollapsibleMenuItem>
-      );
-    }
-
-    return null;
-  };
+  const breadcrumbItems = pathname.split("/").filter(Boolean);
 
   return (
     <SidebarProvider>
       <div className="flex flex-col h-screen w-full">
         <Topbar menuGroups={menuGroups} />
-        <div className="flex flex-1 overflow-hidden  w-full">
-          <SideBar className="h-full mt-[3.2rem]">
-            <SidebarGroup label="Main menu">
-              <SidebarMenu>{sidebarConfig.map(renderMenuItem)}</SidebarMenu>
+        <div className="flex flex-1 overflow-hidden w-full  ">
+          <Sidebar className="h-full mt-[4.2rem] ">
+            <div className="px-4 pt-4">
+              <Input className="w-full" placeholder="Search" />
+            </div>
+
+            <SidebarGroup>
+              <NestedSidebar items={sidebarConfig} userRole={userRole} />
             </SidebarGroup>
-          </SideBar>
-          <main className="flex-1 overflow-auto  p-4  pt-[4.2rem] w-full">
+          </Sidebar>
+
+          <main className="flex-1 overflow-auto p-4 pt-[4.2rem] mt-4 w-full">
+            <div className="pl-12 pb-2">
+              <Breadcrumb>
+                <BreadcrumbList>
+                  {breadcrumbItems.map((item) => (
+                    <>
+                      <BreadcrumbItem key={item}>
+                        <BreadcrumbLink href={`/${item}`}>
+                          {item}
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                    </>
+                  ))}
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+
             <Outlet />
           </main>
         </div>

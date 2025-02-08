@@ -16,22 +16,20 @@ export default function CasesPage() {
   };
 
   return (
-    <>
-      <div className="container mx-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-4xl font-bold">Cases</h3>
-        </div>
-        <FormProvider {...form}>
-          <DataTable
-            data={data}
-            columns={CaseTableColumn}
-            filterOptions={filterOptions}
-            onBulkDelete={handleBulkDelete}
-            onBulkEdit={handleBulkEdit}
-            createButton={<CreateCaseSheet />}
-          />
-        </FormProvider>
+    <div className="container mx-auto">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-4xl font-bold">Cases</h3>
       </div>
-    </>
+      <FormProvider {...form}>
+        <DataTable
+          data={data}
+          columns={CaseTableColumn}
+          filterOptions={filterOptions}
+          onBulkDelete={handleBulkDelete}
+          onBulkEdit={handleBulkEdit}
+          createButton={<CreateCaseSheet />}
+        />
+      </FormProvider>
+    </div>
   );
 }

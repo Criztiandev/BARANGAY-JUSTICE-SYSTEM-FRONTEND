@@ -58,11 +58,7 @@ const InputField: FC<Props> = ({ label, description, ...props }) => {
                 </Button>
               )}
 
-              <Input
-                {...props}
-                {...field}
-                className={cn("border-none bg-white")}
-              />
+              <Input {...props} {...field} className={cn("border-none ")} />
               {props.dir === "right" && props.icon && (
                 <Button
                   type="button"

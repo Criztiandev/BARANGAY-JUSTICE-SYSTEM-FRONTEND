@@ -1,26 +1,76 @@
 import { LucideIcon } from "lucide-react";
+import { ReactNode } from "react";
 
-export type Role = "admin" | "user" | "manager";
-
+// Base menu item interface
 export interface BaseMenuItem {
+  id: string;
   title: string;
   icon?: LucideIcon;
-  roles?: Role[];
+  roles?: string[];
+  badge?: string | number;
+  disabled?: boolean;
 }
 
-export interface MenuItem extends BaseMenuItem {
-  type: "item";
+// Leaf menu item (no children)
+export interface MenuLeafItem extends BaseMenuItem {
   href: string;
 }
 
-export interface SubMenuItem extends BaseMenuItem {
-  type: "sub";
-  href: string;
+// Branch menu item (has children)
+export interface MenuBranchItem extends BaseMenuItem {
+  children: (MenuLeafItem | MenuBranchItem)[];
 }
 
-export interface CollapsibleMenuItem extends BaseMenuItem {
-  type: "collapsible";
-  children: (MenuItem | SubMenuItem)[];
+// Combined menu item type
+export type MenuItem = MenuLeafItem | MenuBranchItem;
+
+// Type guard to check if an item has children
+export const isMenuBranch = (item: MenuItem): item is MenuBranchItem => {
+  return "children" in item;
+};
+
+// Props for the NestedMenuItem component
+export interface NestedMenuItemProps {
+  item: MenuItem;
+  level?: number;
+  userRole: string;
+  className?: string;
 }
 
-export type SidebarMenuItemType = MenuItem | CollapsibleMenuItem;
+// Props for the NestedSidebar component
+export interface NestedSidebarProps {
+  items: MenuItem[];
+  userRole: string;
+  className?: string;
+}
+
+// Props for the BaseLayout component
+export interface BaseLayoutProps {
+  menuGroups: MenuGroupType[];
+  sidebarConfig: MenuItem[];
+}
+
+// Group type for menu items
+export interface MenuGroupType {
+  id: string;
+  label: string;
+  icon?: ReactNode;
+  items: MenuItem[];
+}
+
+// Role-based access control types
+export type UserRole = "admin" | "user" | "guest";
+
+// Expanded menu item type with active state
+export type ActiveMenuItem = MenuItem & {
+  isActive?: boolean;
+  parentIds?: string[]; // For tracking parent-child relationships
+};
+
+// Sidebar context type
+export interface SidebarContextType {
+  isOpen: boolean;
+  toggleSidebar: () => void;
+  activeItemId?: string;
+  setActiveItemId: (id: string) => void;
+}

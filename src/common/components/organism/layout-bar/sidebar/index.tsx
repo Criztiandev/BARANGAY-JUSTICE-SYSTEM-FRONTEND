@@ -1,175 +1,150 @@
-import { PropsWithChildren, ReactNode, useState } from "react";
-
+import { useState } from "react";
+import { MenuItem, isMenuBranch } from "./types";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup as SchadCnSidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenuButton,
+  SidebarMenu,
   SidebarMenuItem as SchadcnSidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubItem,
+  SidebarMenuButton,
   SidebarMenuBadge,
-} from "../../../atoms/ui/sidebar";
-import { Link } from "react-router-dom";
+  SidebarMenuSub,
+} from "@/common/components/atoms/ui/sidebar";
+import { Link, useLocation } from "react-router-dom";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../../../atoms/ui/collapsible";
+} from "@/common/components/atoms/ui/collapsible";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/common/lib/utils";
 
-interface Props extends PropsWithChildren {
-  className?: string;
-}
-const SideBar = ({ className, children }: Props) => {
-  return (
-    <Sidebar className={cn("w-[--sidebar-width]", className)}>
-      <SidebarContent>{children}</SidebarContent>
-    </Sidebar>
-  );
-};
-
-interface SidebarItemProps {
-  title: string;
-  dir?: "left" | "right";
-  href: string;
-  icon: ReactNode;
-  badge?: string;
-  isActive?: boolean;
+interface NestedMenuItemProps {
+  item: MenuItem;
+  level?: number;
+  userRole: string;
+  active?: boolean;
 }
 
-export const SidebarMenuItem = ({
-  title,
-  dir = "left",
-  icon,
-  href,
-  badge,
-  isActive,
-}: SidebarItemProps) => {
+export const NestedMenuItem = ({
+  item,
+  level = 0,
+  userRole,
+  active = false,
+}: NestedMenuItemProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  // Check if current path matches item href or any child href
+  const isActive =
+    active ||
+    location.pathname === (item as any).href ||
+    (isMenuBranch(item) &&
+      item.children.some((child) => location.pathname === (child as any).href));
+
+  // Check role-based access
+  if (item.roles && !item.roles.includes(userRole)) {
+    return null;
+  }
+
+  if (isMenuBranch(item)) {
+    // Auto-expand if a child is active
+    const hasActiveChild = item.children.some(
+      (child) => location.pathname === (child as any).href
+    );
+    if (hasActiveChild && !isOpen) {
+      setIsOpen(true);
+    }
+
+    return (
+      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+        <SchadcnSidebarMenuItem>
+          <CollapsibleTrigger asChild>
+            <SidebarMenuButton
+              className={cn(
+                "w-full justify-between",
+                level > 0 && `pl-${level * 4}`,
+                isActive && "bg-primary/10 text-primary font-medium"
+              )}
+            >
+              <span className="flex items-center">
+                {item.icon && (
+                  <span className={cn("mr-2", isActive && "text-primary")}>
+                    <item.icon size={18} />
+                  </span>
+                )}
+                {item.title}
+              </span>
+              {isOpen ? (
+                <ChevronUp className="h-4 w-4" />
+              ) : (
+                <ChevronDown className="h-4 w-4" />
+              )}
+            </SidebarMenuButton>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <SidebarMenuSub>
+              {item.children.map((child) => (
+                <NestedMenuItem
+                  key={child.id}
+                  item={child}
+                  level={level + 1}
+                  userRole={userRole}
+                  active={location.pathname === (child as any).href}
+                />
+              ))}
+            </SidebarMenuSub>
+          </CollapsibleContent>
+        </SchadcnSidebarMenuItem>
+      </Collapsible>
+    );
+  }
+
   return (
     <SchadcnSidebarMenuItem>
       <SidebarMenuButton
         asChild
-        variant="default"
-        size="default"
-        className={cn(`${isActive && "bg-primary text-primary-foreground"}`)}
+        className={cn(
+          "w-full",
+          level > 0 && `pl-${level * 4}`,
+          isActive && "bg-primary/10 text-primary font-medium"
+        )}
+        isActive={isActive}
       >
-        <Link to={href} className="flex">
-          {dir === "left" && icon}
-          <span>{title}</span>
-          {dir === "right" && icon}
+        <Link to={item.href} className="flex items-center">
+          {item.icon && (
+            <span className={cn("mr-2", isActive && "text-primary")}>
+              <item.icon size={18} />
+            </span>
+          )}
+          <span className="text-base">{item.title}</span>
         </Link>
       </SidebarMenuButton>
-      {badge && <SidebarMenuBadge>{badge}</SidebarMenuBadge>}
+      {item.badge && <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>}
     </SchadcnSidebarMenuItem>
   );
 };
 
-interface SidebarCollapsibleMenuItemProps {
-  title: string;
-  icon?: React.ReactNode;
-  children: React.ReactNode;
+interface NestedSidebarProps {
+  items: MenuItem[];
+  userRole: string;
+  className?: string;
 }
 
-export function SidebarCollapsibleMenuItem({
-  title,
-  icon,
-  children,
-}: SidebarCollapsibleMenuItemProps) {
-  const [open, setOpen] = useState(false);
+export const NestedSidebar = ({
+  items,
+  userRole,
+  className,
+}: NestedSidebarProps) => {
+  const location = useLocation();
 
   return (
-    <Collapsible open={open} onOpenChange={setOpen}>
-      <SchadcnSidebarMenuItem>
-        <CollapsibleTrigger asChild>
-          <SidebarMenuButton className="w-full justify-between">
-            <span className="flex items-center">
-              {icon && <span className="mr-2">{icon}</span>}
-              {title}
-            </span>
-            {open ? (
-              <ChevronUp className="h-4 w-4" />
-            ) : (
-              <ChevronDown className="h-4 w-4" />
-            )}
-          </SidebarMenuButton>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <SidebarMenuSub>{children}</SidebarMenuSub>
-        </CollapsibleContent>
-      </SchadcnSidebarMenuItem>
-    </Collapsible>
-  );
-}
-
-interface SidebarSubMenuItemProps
-  extends React.ComponentPropsWithoutRef<typeof SidebarMenuSubItem> {
-  title: string;
-  href: string;
-  isActive?: boolean;
-}
-
-export function SidebarSubMenuItem({
-  title,
-  href,
-  isActive,
-  ...props
-}: SidebarSubMenuItemProps) {
-  return (
-    <SidebarMenuSubItem {...props}>
-      <SidebarMenuButton
-        asChild
-        data-active={isActive}
-        className={cn(
-          "w-full justify-start",
-          isActive && "bg-primary text-primary-foreground"
-        )}
-      >
-        <Link to={href}>{title}</Link>
-      </SidebarMenuButton>
-    </SidebarMenuSubItem>
-  );
-}
-
-/**
- * Groups
- */
-
-interface SidebarGroupProps extends PropsWithChildren {
-  label: string;
-}
-
-export const SidebarGroup = ({ children, label }: SidebarGroupProps) => {
-  return (
-    <SchadCnSidebarGroup>
-      <SidebarGroupLabel>{label}</SidebarGroupLabel>
-      <SidebarGroupContent>{children}</SidebarGroupContent>
-    </SchadCnSidebarGroup>
+    <SidebarMenu className={cn("mt-2", className)}>
+      {items.map((item) => (
+        <NestedMenuItem
+          key={item.id}
+          item={item}
+          userRole={userRole}
+          active={location.pathname === (item as any).href}
+        />
+      ))}
+    </SidebarMenu>
   );
 };
-
-export const SidebarCollapsableGroup = ({
-  children,
-  label,
-}: SidebarGroupProps) => {
-  return (
-    <Collapsible>
-      <SchadCnSidebarGroup>
-        <SidebarGroupLabel asChild>
-          <CollapsibleTrigger>
-            <span>{label}</span>
-            <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-          </CollapsibleTrigger>
-        </SidebarGroupLabel>
-        <CollapsibleContent>
-          <SidebarGroupContent>{children}</SidebarGroupContent>
-        </CollapsibleContent>
-      </SchadCnSidebarGroup>
-    </Collapsible>
-  );
-};
-
-export default SideBar;
