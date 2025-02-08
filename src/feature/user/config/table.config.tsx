@@ -4,7 +4,7 @@ import columnBuilder from "@/utils/table/column-builder.ts";
 import ActionColumn from "@/common/components/molecules/table/columns/action-column";
 import { DownloadIcon } from "lucide-react";
 import TextColumn from "@/common/components/molecules/table/columns/text-input-column";
-import ColorColumn from "@/common/components/molecules/table/columns/color-column";
+import ToggleColumn from "@/common/components/molecules/table/columns/toggle-column";
 
 const caseColumns = columnBuilder<Case>([
   {
@@ -17,33 +17,15 @@ const caseColumns = columnBuilder<Case>([
     id: "caseType",
     accessorKey: "caseType",
     header: "Case Type",
-    cell: (props) => (
-      <ColorColumn
-        {...props}
-        colors={[
-          {
-            color: "#FF5733",
-            tooltip: "Primary",
-            onClick: () => console.log("primary clicked"),
-          },
-          {
-            color: "#33FF57",
-            tooltip: "Secondary",
-            onClick: () => console.log("secondary clicked"),
-          },
-          {
-            color: "#5733FF",
-            tooltip: "Accent",
-            onClick: () => console.log("accent clicked"),
-          },
-          {
-            color: "#FF33F5",
-            tooltip: "Extra Color",
-          },
-        ]}
-        stackLimit={3}
-        size="md"
-        shape="rounded"
+    cell: () => (
+      <ToggleColumn
+        label="Active"
+        variant="danger"
+        defaultValue={false}
+        onToggleOn={() => console.log("Toggled On")}
+        onToggleOff={() => console.log("Toggled Off")}
+        onChange={(value) => console.log("Changed:", value)}
+        info="This is a toggle column"
       />
     ),
   },
