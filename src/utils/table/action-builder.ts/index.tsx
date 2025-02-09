@@ -1,7 +1,4 @@
-import {
-  ActionConfig,
-  BulkActionType,
-} from "@/common/components/molecules/table/data-table/types/action.types";
+import { ActionConfig } from "@/common/components/molecules/table/data-table/types/action.types";
 
 // Default handlers for bulk actions
 const defaultBulkActionHandlers = {

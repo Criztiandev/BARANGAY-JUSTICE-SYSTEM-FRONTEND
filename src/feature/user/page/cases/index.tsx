@@ -3,6 +3,7 @@ import useCreateCase from "../../hooks/case/use-create-case";
 import { FormProvider } from "react-hook-form";
 import caseColumns from "./config/column.config";
 import caseActionConfig from "./config/action.config";
+import CreateCaseSheet from "@/common/components/organism/sheet/case/create-case-sheet";
 export const data: any[] = [
   {
     id: "1",
@@ -34,6 +35,7 @@ export default function CasesPage() {
           data={data}
           columns={caseColumns}
           actions={caseActionConfig}
+          createAction={<CreateCaseSheet />}
         />
       </FormProvider>
     </div>

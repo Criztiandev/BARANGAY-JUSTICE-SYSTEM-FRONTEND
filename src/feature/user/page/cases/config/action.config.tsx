@@ -10,10 +10,8 @@ const caseActionConfig = actionBuilder<Case>({
   // Filter configuration
   filter: {
     field: "status",
-    options: [
-      { label: "Active", value: "active" },
-      { label: "Inactive", value: "inactive" },
-    ],
+    options: [{ label: "All", value: "" }],
+
     groups: [
       {
         field: "status",

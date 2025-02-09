@@ -40,7 +40,7 @@ const CreateCaseSheet = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Create</Button>
+        <Button size="sm">Create</Button>
       </DialogTrigger>
       <DialogContent className="px-4 max-w-2xl min-w-[500px]">
         <DialogHeader>
