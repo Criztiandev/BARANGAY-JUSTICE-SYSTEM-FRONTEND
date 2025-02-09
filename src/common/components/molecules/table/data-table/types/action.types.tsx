@@ -2,12 +2,24 @@ import { ReactNode } from "react";
 
 // Basic Types
 export type DefaultActionType = "button";
-export type BulkActionType =
-  | "delete"
-  | "update"
-  | "export"
-  | "archive"
-  | "custom";
+
+// Action Types
+interface BaseActionProps {
+  id: string;
+  label: string;
+  icon?: ReactNode;
+  disabled?: boolean;
+  hidden?: boolean;
+}
+
+// Search Types
+export type SearchConfig = {
+  id?: string;
+  placeholder?: string;
+  className?: string;
+  hidden?: boolean;
+  onChange?: (value: string) => void;
+};
 
 // Filter Types
 export type FilterOptionItem = {
@@ -31,36 +43,46 @@ export type FilterConfig<T> = {
   onChange?: (field: keyof T | string, value: any) => void;
 };
 
-// Search Types
-export type SearchConfig = {
-  id?: string;
-  placeholder?: string;
-  className?: string;
-  hidden?: boolean;
-  onChange?: (value: string) => void;
-};
+// More Actions
 
-// Action Types
-interface BaseActionProps<T> {
-  id: string;
-  label: string;
-  icon?: ReactNode;
-  disabled?: boolean;
-  hidden?: boolean;
+export interface DefaultAction<T> extends BaseActionProps {
+  type: DefaultActionType;
+  variant?: "default" | "destructive" | "outline";
   onClick: (data?: T[]) => void | Promise<void>;
 }
 
-export interface DefaultAction<T> extends BaseActionProps<T> {
-  type: DefaultActionType;
-  variant?: "default" | "destructive" | "outline";
-}
-
-export interface CustomAction<T> extends BaseActionProps<T> {
+export interface CustomAction extends BaseActionProps {
   type: "custom";
   component: ReactNode;
 }
 
-export type MoreAction<T> = DefaultAction<T> | CustomAction<T>;
+export type MoreAction<T> = DefaultAction<T> | CustomAction;
+
+// Configuration Types
+export type MoreActionsConfig<T> = {
+  id?: string;
+  className?: string;
+  hidden?: boolean;
+  placement?: "top" | "bottom" | "left" | "right";
+  trigger?: ReactNode;
+  actions: MoreAction<T>[];
+};
+
+// Bulk Actions
+export type BulkActionType =
+  | "delete"
+  | "update"
+  | "export"
+  | "archive"
+  | "custom";
+
+export type BulkActionsConfig<T> = {
+  id?: string;
+  className?: string;
+  hidden?: boolean;
+  placement?: "top" | "bottom" | "left" | "right";
+  actions: BulkAction<T>[];
+};
 
 export interface BulkAction<T> {
   id: string;
@@ -75,24 +97,6 @@ export interface BulkAction<T> {
   confirmationRequired?: boolean;
   confirmationMessage?: string;
 }
-
-// Configuration Types
-export type MoreActionsConfig<T> = {
-  id?: string;
-  className?: string;
-  hidden?: boolean;
-  placement?: "top" | "bottom" | "left" | "right";
-  trigger?: ReactNode;
-  actions: MoreAction<T>[];
-};
-
-export type BulkActionsConfig<T> = {
-  id?: string;
-  className?: string;
-  hidden?: boolean;
-  placement?: "top" | "bottom" | "left" | "right";
-  actions: BulkAction<T>[];
-};
 
 // Main Configuration Type
 export type ActionConfig<T> = {

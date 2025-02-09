@@ -44,6 +44,14 @@ const caseActionConfig = actionBuilder<Case>({
         label: "Export",
         onClick: () => console.log("Export clicked"),
       },
+
+      {
+        id: "import",
+        type: "custom",
+        label: "Import",
+        component: <div>Import</div>,
+        onClick: () => console.log("Import clicked"),
+      },
     ],
   },
 
