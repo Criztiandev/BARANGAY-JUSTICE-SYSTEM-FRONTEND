@@ -12,15 +12,16 @@ import { cn } from "@/common/lib/utils";
 import { Button } from "@/common/components/atoms/ui/button";
 import { Input } from "@/common/components/atoms/ui/input";
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   description?: string;
+
   dir?: "left" | "right";
   icon?: ReactNode;
   onPress?: () => void;
 }
 
-const InputField: FC<Props> = ({ label, description, ...props }) => {
+const InputField: FC<InputFieldProps> = ({ label, description, ...props }) => {
   const divRef = useRef<HTMLDivElement | null>(null);
   const form = useFormContext();
 

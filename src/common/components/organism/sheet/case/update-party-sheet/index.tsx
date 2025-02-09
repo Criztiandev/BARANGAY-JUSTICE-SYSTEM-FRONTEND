@@ -11,8 +11,8 @@ import {
 import { memo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { XStack } from "@/common/components/atoms/ui/stack";
-import InputField from "@/common/components/molecules/form/input-field";
-import SelectField from "@/common/components/molecules/form/select-field";
+import InputField from "@/common/components/molecules/form/fields/input-field";
+import SelectField from "@/common/components/molecules/form/fields/select-field";
 
 interface Props {
   label?: string;

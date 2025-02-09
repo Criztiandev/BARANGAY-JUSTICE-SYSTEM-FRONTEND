@@ -1,5 +1,5 @@
-import InputField from "@/common/components/molecules/form/input-field";
-import SelectField from "@/common/components/molecules/form/select-field";
+import InputField from "@/common/components/molecules/form/fields/input-field";
+import SelectField from "@/common/components/molecules/form/fields/select-field";
 
 const CompliantInfoStep = () => {
   return (

@@ -17,7 +17,8 @@ import {
   FormMessage,
 } from "@/common/components/atoms/ui/form";
 
-interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
+export interface SelectFieldProps
+  extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   description?: string;
   placeholder: string;
@@ -29,7 +30,7 @@ interface SelectOptions {
   value: string;
 }
 
-const SelectField: FC<Props> = ({
+const SelectField: FC<SelectFieldProps> = ({
   label,
   placeholder,
   options,

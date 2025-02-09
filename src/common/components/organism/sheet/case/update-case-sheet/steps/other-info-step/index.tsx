@@ -1,6 +1,6 @@
-import InputField from "@/common/components/molecules/form/input-field";
-import SelectField from "@/common/components/molecules/form/select-field";
-import TextAreaField from "@/common/components/molecules/form/text-area-field";
+import InputField from "@/common/components/molecules/form/fields/input-field";
+import SelectField from "@/common/components/molecules/form/fields/select-field";
+import TextAreaField from "@/common/components/molecules/form/fields/text-area-field";
 import { useFormContext } from "react-hook-form";
 import { CivilCaseType, CriminalCaseType } from "../../../cases.data";
 const OtherInfoStep = () => {

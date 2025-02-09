@@ -11,12 +11,17 @@ import {
 import { cn } from "@/common/lib/utils";
 import { Textarea } from "@/common/components/atoms/ui/textarea";
 
-interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextAreaFieldProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   description?: string;
 }
 
-const TextAreaField: FC<Props> = ({ label, description, ...props }) => {
+const TextAreaField: FC<TextAreaFieldProps> = ({
+  label,
+  description,
+  ...props
+}) => {
   const form = useFormContext();
 
   return (

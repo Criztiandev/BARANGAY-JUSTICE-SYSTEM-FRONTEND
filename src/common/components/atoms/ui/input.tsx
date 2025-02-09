@@ -1,6 +1,13 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/common/lib/utils"
+import { cn } from "@/common/lib/utils";
+
+// Upgrade requirements
+/**
+ * 1. Character limit with indicator
+ * 2. icon left and right suport and can be customized and can be used as a button
+ *
+ */
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
   ({ className, type, ...props }, ref) => {
@@ -14,9 +21,9 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
         ref={ref}
         {...props}
       />
-    )
+    );
   }
-)
-Input.displayName = "Input"
+);
+Input.displayName = "Input";
 
-export { Input }
+export { Input };
