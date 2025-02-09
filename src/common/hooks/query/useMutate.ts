@@ -6,12 +6,14 @@ import {
   useMutation,
 } from "@tanstack/react-query";
 import { ErrorResponse } from "@/feature/shared/other/interface/server.interface";
-import { toast } from "@/common/components/atoms/ui/sonner";
 
 type ExtendedError = Error & {
   status?: number;
   statusText?: string;
   code?: string;
+  details?: {
+    message: string;
+  }[];
 };
 
 interface UseMutateOptions<
@@ -54,7 +56,11 @@ const useMutate = <TData = unknown, TVariables = unknown, TContext = unknown>(
       }
       return false;
     },
-    onError: (error: unknown) => {
+    onError: (
+      error: unknown,
+      variables: TVariables,
+      context: TContext | undefined
+    ) => {
       let finalError: ExtendedError;
 
       if (error instanceof AxiosError) {
@@ -64,8 +70,21 @@ const useMutate = <TData = unknown, TVariables = unknown, TContext = unknown>(
           finalError = new Error(
             errorMessage || "Server error"
           ) as ExtendedError;
+
+          const firstError =
+            error.response.data.details?.[0].message.toString() ||
+            error.response.data?.error ||
+            "Server error";
+
+          const upperCaseError =
+            firstError[0].toUpperCase() + firstError.slice(1).toLowerCase();
+
+          finalError.details = error.response.data.details;
+
           finalError.status = error.response.status;
           finalError.statusText = error.response.statusText;
+          finalError.message = upperCaseError;
+          finalError.details = error.response.data.details;
         } else if (error.request) {
           // Request was made but no response received
           finalError = new Error(
@@ -91,7 +110,9 @@ const useMutate = <TData = unknown, TVariables = unknown, TContext = unknown>(
         customErrorHandler(finalError);
       }
 
-      toast.error(finalError.message);
+      if (options.onError) {
+        options.onError(finalError, variables, context);
+      }
 
       throw finalError;
     },

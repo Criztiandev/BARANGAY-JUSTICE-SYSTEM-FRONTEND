@@ -5,7 +5,7 @@ import { ExternalToast, Toaster as Sonner, toast as sonnerToast } from "sonner";
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const toastStyle = {
-  success: "bg-success text-success-foreground",
+  success: "bg-green-500 border-none",
   info: "bg-info text-info-foreground",
   warning: "bg-warning text-warning-foreground",
   error: "bg-destructive text-destructive-foreground border-none",

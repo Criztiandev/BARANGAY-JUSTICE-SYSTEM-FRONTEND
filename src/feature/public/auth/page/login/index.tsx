@@ -8,17 +8,37 @@ import FormBuilder from "@/utils/form/form-builder";
 import loginFormConfig from "./login-form.config";
 import AuthLayout from "@/common/components/template/layout/auth-layout";
 import { LoginRequestValue } from "../../types/login.interface";
+import { Label } from "@/common/components/atoms/ui/label";
+import { useLoginRememberMe } from "@/hooks/use-remember-me";
 
 const LoginPage = () => {
   const { form, mutate } = useLogin();
 
-  const onSubmit = (value: LoginRequestValue) => {
-    mutate(value);
+  const {
+    rememberMe,
+    toggleRememberMe,
+    setData: setSavedCredentials,
+  } = useLoginRememberMe({
+    storageKey: "login-credentials",
+    onDataLoad: (data) => {
+      if (data) {
+        form.setValue("email", data.email);
+      }
+    },
+  });
+
+  const onSubmit = (values: LoginRequestValue) => {
+    if (rememberMe) {
+      setSavedCredentials({
+        email: values.email,
+      });
+    }
+    mutate(values);
   };
 
   return (
     <AuthLayout
-      title="Login in to your Account"
+      title="Login to your Account"
       description="Welcome back! Please enter your details"
     >
       <FormBase {...form}>
@@ -29,20 +49,36 @@ const LoginPage = () => {
           <FormBuilder fields={loginFormConfig} className="mb-4" />
 
           <XStack className="justify-between items-center">
-            <XStack className="gap-2 items-center">
-              <Checkbox />
+            <Label className="space-x-2 flex items-center cursor-pointer">
+              <Checkbox
+                checked={rememberMe}
+                onCheckedChange={toggleRememberMe}
+                aria-label="Remember login credentials"
+              />
               <span>Remember me</span>
-            </XStack>
+            </Label>
 
-            <Link to="/forgot-password">Forgot password</Link>
+            <Link
+              to="/forgot-password"
+              className="text-blue-500 hover:text-blue-600 transition-colors"
+            >
+              Forgot password?
+            </Link>
           </XStack>
 
-          <Button className="mb-8">Login</Button>
+          <Button
+            type="submit"
+            className="mb-8"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? "Logging in..." : "Login"}
+          </Button>
+
           <XStack className="gap-2 items-center justify-center">
-            <span>Don't have an account</span>
+            <span className="text-gray-600">Don't have an account?</span>
             <Link
               to="/register"
-              className="text-blue-500 underline underline-offset-2"
+              className="text-blue-500 hover:text-blue-600 underline underline-offset-2 transition-colors"
             >
               Create an account
             </Link>

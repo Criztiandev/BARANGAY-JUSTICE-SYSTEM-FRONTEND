@@ -5,3 +5,17 @@ export interface AccountSchema {
   password: string;
   role: "user" | "admin";
 }
+
+export type Account = {
+  _id?: string;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  email: string;
+  password: string;
+  status?: string;
+  role: string;
+  refreshToken?: string;
+  isDeleted?: boolean;
+  deletedAt?: Date;
+};
