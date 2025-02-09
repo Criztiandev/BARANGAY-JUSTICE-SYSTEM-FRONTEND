@@ -4,7 +4,6 @@ import { YStack } from "@/common/components/atoms/ui/stack";
 interface Props extends PropsWithChildren {
   title: string;
   description?: string;
-  image?: string;
 }
 
 const AuthLayout = ({ children, title, description }: Props) => {

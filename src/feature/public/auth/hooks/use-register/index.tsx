@@ -12,7 +12,10 @@ export const useRegister = () => {
 
   const mutate = useMutate({
     mutationKey: ["/POST /auth/register"],
-    mutationFn: async () => await api.post("/"),
+    mutationFn: async () => {
+      const result = await api.post("/");
+      return result.data;
+    },
   });
 
   return { form, mutate };

@@ -1,10 +1,37 @@
-import { useTheme } from "next-themes"
-import { Toaster as Sonner } from "sonner"
+import { cn } from "@/common/lib/utils";
+import { useTheme } from "next-themes";
+import { ExternalToast, Toaster as Sonner, toast as sonnerToast } from "sonner";
 
-type ToasterProps = React.ComponentProps<typeof Sonner>
+type ToasterProps = React.ComponentProps<typeof Sonner>;
+
+const toastStyle = {
+  success: "bg-success text-success-foreground",
+  info: "bg-info text-info-foreground",
+  warning: "bg-warning text-warning-foreground",
+  error: "bg-destructive text-destructive-foreground border-none",
+} as const;
+
+type ToastType = keyof typeof toastStyle;
+
+interface SonnerToastOptions extends ExternalToast {
+  type?: ToastType;
+}
+
+type ToastFunction = (
+  message: string,
+  options?: Omit<SonnerToastOptions, "type">
+) => void;
+
+interface ToastInterface {
+  (message: string, options?: SonnerToastOptions): void;
+  success: ToastFunction;
+  error: ToastFunction;
+  info: ToastFunction;
+  warning: ToastFunction;
+}
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
+  const { theme = "system" } = useTheme();
 
   return (
     <Sonner
@@ -23,7 +50,39 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       {...props}
     />
-  )
-}
+  );
+};
 
-export { Toaster }
+const createToastMethod = (type: ToastType): ToastFunction => {
+  return (message, options = {}) => {
+    return sonnerToast(message, {
+      position: "top-right",
+      duration: 3000,
+      className: cn(toastStyle[type]),
+      ...options,
+    });
+  };
+};
+
+const toast = Object.assign(
+  (message: string, options: SonnerToastOptions = {}) => {
+    const { type, ...rest } = options;
+    const selectedType = type ? toastStyle[type] : undefined;
+
+    return sonnerToast(message, {
+      position: "top-right",
+      duration: 3000,
+      className: cn(selectedType),
+      ...rest,
+    });
+  },
+  {
+    success: createToastMethod("success"),
+    error: createToastMethod("error"),
+    info: createToastMethod("info"),
+    warning: createToastMethod("warning"),
+  }
+) as ToastInterface;
+
+export { Toaster, toast };
+export type { SonnerToastOptions, ToastType };

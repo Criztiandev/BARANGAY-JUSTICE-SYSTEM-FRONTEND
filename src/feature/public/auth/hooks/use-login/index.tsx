@@ -3,10 +3,10 @@ import useMutate from "@/common/hooks/query/useMutate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoginValidation from "../../validation/login.validation";
 import { useForm } from "react-hook-form";
-import { ILoginValue } from "../../types/login.interface";
+import { LoginRequestValue } from "../../types/login.interface";
 
 export const useLogin = () => {
-  const form = useForm<ILoginValue>({
+  const form = useForm<LoginRequestValue>({
     defaultValues: {
       email: "",
       password: "",
@@ -19,7 +19,7 @@ export const useLogin = () => {
     mutationFn: async () => await api.post("/"),
   });
 
-  return { form, mutate };
+  return { form, ...mutate };
 };
 
 export default useLogin;

@@ -50,7 +50,7 @@ export interface PasswordFieldProps
 
 const defaultRequirements: PasswordRequirement[] = [
   { regex: /.{8,}/, text: "At least 8 characters" },
-  { regex: /[0-9]/, text: "At least 1 number" },
+  { regex: /\d/, text: "At least 1 number" },
   { regex: /[a-z]/, text: "At least 1 lowercase letter" },
   { regex: /[A-Z]/, text: "At least 1 uppercase letter" },
 ];
@@ -185,18 +185,20 @@ const PasswordField: FC<PasswordFieldProps> = ({
 
                 {/* Password strength description */}
 
-                <p
-                  id={`${id}-description`}
-                  className={cn(
-                    `mb-2 text-sm font-medium text-muted-foreground mt-2`,
-                    getStrengthTextColor(strengthScore),
-                    showRequirements && "text-foreground"
-                  )}
-                >
-                  {getStrengthText(strengthScore)}
+                {showRequirements && (
+                  <p
+                    id={`${id}-description`}
+                    className={cn(
+                      `mb-2 text-sm font-medium text-muted-foreground mt-2`,
+                      getStrengthTextColor(strengthScore),
+                      showRequirements && "text-foreground"
+                    )}
+                  >
+                    {getStrengthText(strengthScore)}
 
-                  {showRequirements && ". Must contain:"}
-                </p>
+                    {showRequirements && ". Must contain:"}
+                  </p>
+                )}
 
                 {/* Password requirements list */}
                 {showRequirements && (

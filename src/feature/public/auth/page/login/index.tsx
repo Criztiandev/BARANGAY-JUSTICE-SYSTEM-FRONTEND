@@ -7,11 +7,14 @@ import useLogin from "../../hooks/use-login";
 import FormBuilder from "@/utils/form/form-builder";
 import loginFormConfig from "./login-form.config";
 import AuthLayout from "@/common/components/template/layout/auth-layout";
+import { LoginRequestValue } from "../../types/login.interface";
 
 const LoginPage = () => {
-  const { form } = useLogin();
+  const { form, mutate } = useLogin();
 
-  const onSubmit = () => {};
+  const onSubmit = (value: LoginRequestValue) => {
+    mutate(value);
+  };
 
   return (
     <AuthLayout
