@@ -19,3 +19,5 @@ export type Account = {
   isDeleted?: boolean;
   deletedAt?: Date;
 };
+
+export type InitialAccount = Pick<Account, "_id" | "role">;

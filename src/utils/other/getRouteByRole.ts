@@ -1,19 +1,30 @@
+// utils/other/getRouteByRole.ts
+import { createBrowserRouter } from "react-router-dom";
 import authRoutes from "@/feature/public/auth/auth.routes";
-import { LocalStorageCredentials } from "@/feature/public/auth/types/auth.interface";
 import { AccountSchema } from "@/feature/shared/account/interfaces/account.interface";
 
+// Type guard to check if a string is a valid role
+export const isValidRole = (role: string): role is AccountSchema["role"] => {
+  // Define valid roles - these should match AccountSchema['role']
+  const validRoles: AccountSchema["role"][] = ["user", "admin"];
+  return validRoles.includes(role as AccountSchema["role"]);
+};
+
 export const getRouteByRole = (
-  credentials: LocalStorageCredentials | null,
-  roleMap: Record<AccountSchema["role"], any>
-) => {
-  if (!credentials?.role) return authRoutes;
+  role: string | undefined,
+  roleMap: Record<AccountSchema["role"], ReturnType<typeof createBrowserRouter>>
+): ReturnType<typeof createBrowserRouter> => {
+  // If no role provided, return auth routes
+  if (!role) return authRoutes;
 
-  const userRoles = Array.isArray(credentials.role)
-    ? credentials.role
-    : [credentials.role];
+  // Check if the role is valid
+  if (!isValidRole(role)) {
+    console.warn(
+      `Invalid role provided: ${role}. Falling back to auth routes.`
+    );
+    return authRoutes;
+  }
 
-  // Check if role exists in roleMap
-  const selectedRole =
-    userRoles.find((role) => role in roleMap) || userRoles[0];
-  return roleMap[selectedRole as AccountSchema["role"]] || authRoutes;
+  // At this point, TypeScript knows role is a valid AccountSchema['role']
+  return roleMap[role];
 };

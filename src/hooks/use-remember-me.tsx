@@ -40,7 +40,6 @@ function useRememberMe<T extends Record<string, any>>(
   useEffect(() => {
     (async () => {
       const storedState = await storage.getItem();
-      console.log(storedState);
       if (storedState) {
         setRememberMe(storedState.isEnabled);
 

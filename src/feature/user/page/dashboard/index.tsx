@@ -1,6 +1,5 @@
 import TotalCaseBarChart from "@/common/components/organism/chart/case/total-case-bar-chart";
 import UnsettledCasePieChart from "@/common/components/organism/chart/case/unsettled-case-pie-chart";
-import RecentCaseTable from "@/common/components/organism/table/case/recent-case-data-table";
 
 const UserDashboard = () => {
   return (
@@ -20,9 +19,7 @@ const UserDashboard = () => {
         <UnsettledCasePieChart />
       </div>
 
-      <div className="mt-4">
-        <RecentCaseTable />
-      </div>
+      <div className="mt-4">{/* <RecentCaseTable /> */}</div>
     </div>
   );
 };

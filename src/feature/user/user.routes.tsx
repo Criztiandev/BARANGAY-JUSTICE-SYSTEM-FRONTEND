@@ -8,6 +8,7 @@ import UserDocumentScreen from "./page/documents";
 import ActivityScreen from "./page/activity";
 import CaseDetailsScreen from "./page/case-details";
 import NotFoundScreen from "@/common/components/atoms/helper/not-found-scren";
+import ProfileScreen from "../shared/account/page/profile";
 
 const userRoutes = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const userRoutes = createBrowserRouter([
       { path: "documents", element: <UserDocumentScreen /> },
       { path: "cases/:id", element: <CaseDetailsScreen /> },
       { path: "activity", element: <ActivityScreen /> },
+      { path: "profile", element: <ProfileScreen /> },
     ],
   },
   { path: "*", element: <NotFoundScreen /> },

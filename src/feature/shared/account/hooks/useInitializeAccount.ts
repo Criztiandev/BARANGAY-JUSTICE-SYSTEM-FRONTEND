@@ -1,21 +1,29 @@
-import useAuthStore from "@/feature/public/auth/store/auth.store";
-import { LocalStorageCredentials } from "@/feature/public/auth/types/auth.interface";
+import useLocalStorage from "@/common/hooks/utils/useLocalStorage";
+import useAccountStore from "@/feature/public/auth/store/account.store";
 import { useEffect } from "react";
 
 const useInitializeAccount = () => {
-  const { credentials, setCredentials } = useAuthStore();
+  const { getInitialAccount, setInitialAccount } = useAccountStore();
+  const { getItem } = useLocalStorage("credentials");
+
   useEffect(() => {
-    if (!credentials) {
-      setCredentials({
-        UID: "1",
-        role: "user",
-        token: "123123",
-      } as LocalStorageCredentials);
-    }
+    (async () => {
+      const credentials = (await getItem()) as {
+        UID: string;
+        role: string;
+      };
+
+      if (credentials) {
+        setInitialAccount({
+          _id: credentials.UID,
+          role: credentials.role,
+        });
+      }
+    })();
   }, []);
 
   return {
-    credentials,
+    account: getInitialAccount(),
   };
 };
 

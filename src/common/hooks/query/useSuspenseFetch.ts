@@ -1,8 +1,8 @@
 import api from "@/api/client";
 import {
-  useQuery,
-  UseQueryOptions,
-  UseQueryResult,
+  useSuspenseQuery,
+  UseSuspenseQueryOptions,
+  UseSuspenseQueryResult,
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
@@ -26,8 +26,11 @@ interface ExtendedError extends Error {
   };
 }
 
-interface UseFetchOptions<T>
-  extends Omit<UseQueryOptions<T, ExtendedError, T>, "queryKey" | "queryFn"> {
+interface UseSuspenseFetchOptions<T>
+  extends Omit<
+    UseSuspenseQueryOptions<T, ExtendedError, T>,
+    "queryKey" | "queryFn"
+  > {
   onSuccess?: (data: T) => void;
   onError?: (error: ExtendedError) => void;
 }
@@ -69,13 +72,13 @@ function createExtendedError(error: unknown): ExtendedError {
   } as ExtendedError;
 }
 
-function useFetch<T>(
+function useSuspenseFetch<T>(
   url: string,
-  options?: UseFetchOptions<T>
-): UseQueryResult<T, ExtendedError> {
+  options?: UseSuspenseFetchOptions<T>
+): UseSuspenseQueryResult<T, ExtendedError> {
   const { onSuccess, onError, ...queryOptions } = options || {};
 
-  return useQuery<T, ExtendedError>({
+  return useSuspenseQuery<T, ExtendedError>({
     queryKey: [url],
     queryFn: async () => {
       try {
@@ -96,5 +99,5 @@ function useFetch<T>(
   });
 }
 
-export type { ExtendedError, UseFetchOptions };
-export default useFetch;
+export type { ExtendedError, UseSuspenseFetchOptions };
+export default useSuspenseFetch;

@@ -1,18 +1,25 @@
-import { Account } from "@/feature/shared/account/interfaces/account.interface";
+import {
+  Account,
+  InitialAccount,
+} from "@/feature/shared/account/interfaces/account.interface";
 import { create } from "zustand";
 
 interface AccountStoreBlueprint {
-  account: Account | null;
+  account: Account | InitialAccount | null;
   setAccount: (account: Account) => void;
+  setInitialAccount: (account: InitialAccount) => void;
   removeAccount: () => void;
   getAccount: () => Account | null;
+  getInitialAccount: () => InitialAccount | null;
 }
 
 const useAccountStore = create<AccountStoreBlueprint>((set, get) => ({
   account: null,
   setAccount: (account: Account) => set({ account }),
+  setInitialAccount: (account: InitialAccount) => set({ account }),
   removeAccount: () => set({ account: null }),
-  getAccount: () => get().account,
+  getInitialAccount: () => get().account as InitialAccount | null,
+  getAccount: () => get().account as Account | null,
 }));
 
 export default useAccountStore;
