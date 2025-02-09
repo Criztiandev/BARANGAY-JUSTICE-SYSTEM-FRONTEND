@@ -1,4 +1,4 @@
-import { IAccountSchema } from "@/feature/shared/account/account.interface";
+import { AccountSchema } from "@/feature/shared/account/interfaces/account.interface";
 
 export interface ILoginValue
-  extends Pick<IAccountSchema, "email" | "password"> {}
+  extends Pick<AccountSchema, "email" | "password"> {}

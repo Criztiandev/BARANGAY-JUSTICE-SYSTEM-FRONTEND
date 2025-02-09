@@ -9,10 +9,10 @@ import {
   SheetTitle,
 } from "@/common/components/atoms/ui/sheet";
 import { memo } from "react";
-import InputField from "@/common/components/molecules/form/InputField";
 import { FormProvider, useForm } from "react-hook-form";
 import { XStack } from "@/common/components/atoms/ui/stack";
-import SelectField from "@/common/components/molecules/form/SelectField";
+import InputField from "@/common/components/molecules/form/input-field";
+import SelectField from "@/common/components/molecules/form/select-field";
 
 interface Props {
   label?: string;
@@ -23,8 +23,6 @@ interface Props {
 }
 
 const UpdatePartySheet = memo(function UpdatePartySheet({
-  compliantId,
-  label,
   partyType,
   open,
   onOpenChange,

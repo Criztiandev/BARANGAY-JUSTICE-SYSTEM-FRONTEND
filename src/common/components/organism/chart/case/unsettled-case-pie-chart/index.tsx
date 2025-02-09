@@ -1,4 +1,4 @@
-import CaseBadge from "@/common/components/atoms/badge/case/case-badge";
+import CasesBadge from "@/common/components/molecules/badge/case/cases-badge";
 import {
   Card,
   CardContent,
@@ -16,7 +16,6 @@ const chartData = [
   { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
   { browser: "other", visitors: 190, fill: "var(--color-other)" },
 ];
-Card;
 
 const chartConfig = {
   visitors: {
@@ -57,10 +56,10 @@ const UnsettledCasePieChart = () => {
         <DonutChart data={chartData} config={chartConfig} />
         <div className="flex justify-between items-center">
           <div className="grid grid-cols-2 gap-4 w-full">
-            <CaseBadge label="Civil Case" count={100} />
-            <CaseBadge label="Civil Case" count={100} />
-            <CaseBadge label="Civil Case" count={100} />
-            <CaseBadge label="Civil Case" count={100} />
+            <CasesBadge label="Civil Case" count={100} />
+            <CasesBadge label="Civil Case" count={100} />
+            <CasesBadge label="Civil Case" count={100} />
+            <CasesBadge label="Civil Case" count={100} />
           </div>
         </div>
       </CardContent>

@@ -7,10 +7,10 @@ import {
   FormControl,
   FormDescription,
   FormMessage,
-} from "../../atoms/ui/form";
+} from "@/common/components/atoms/ui/form";
 import { cn } from "@/common/lib/utils";
-import { Button } from "../../atoms/ui/button";
-import { Input } from "../../atoms/ui/input";
+import { Button } from "@/common/components/atoms/ui/button";
+import { Input } from "@/common/components/atoms/ui/input";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -33,7 +33,7 @@ const InputField: FC<Props> = ({ label, description, ...props }) => {
   return (
     <FormField
       control={form.control}
-      name={props?.name || "name"}
+      name={props?.name ?? "name"}
       render={({ field }) => (
         <FormItem>
           {label && <FormLabel>{label}</FormLabel>}

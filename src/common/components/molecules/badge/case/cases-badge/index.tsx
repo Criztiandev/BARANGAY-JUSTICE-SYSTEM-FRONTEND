@@ -1,12 +1,12 @@
 import { Badge } from "@/common/components/atoms/ui/badge";
 import { XStack } from "@/common/components/atoms/ui/stack";
 
-interface CaseBadgeProps {
+interface CasesBadgeProps {
   label: string;
   count: number;
 }
 
-const CaseBadge = ({ label, count }: CaseBadgeProps) => {
+const CasesBadge = ({ label, count }: CasesBadgeProps) => {
   return (
     <XStack className="space-x-2 items-center justify-between w-full">
       <span className="text-sm text-muted-foreground font-semibold">
@@ -19,4 +19,4 @@ const CaseBadge = ({ label, count }: CaseBadgeProps) => {
   );
 };
 
-export default CaseBadge;
+export default CasesBadge;

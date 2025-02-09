@@ -1,4 +1,4 @@
-import { FC, TextareaHTMLAttributes, ReactNode } from "react";
+import { FC, TextareaHTMLAttributes } from "react";
 import { useFormContext } from "react-hook-form";
 import {
   FormField,
@@ -7,9 +7,9 @@ import {
   FormControl,
   FormDescription,
   FormMessage,
-} from "../../atoms/ui/form";
+} from "@/common/components/atoms/ui/form";
 import { cn } from "@/common/lib/utils";
-import { Textarea } from "../../atoms/ui/textarea";
+import { Textarea } from "@/common/components/atoms/ui/textarea";
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -22,10 +22,11 @@ const TextAreaField: FC<Props> = ({ label, description, ...props }) => {
   return (
     <FormField
       control={form.control}
-      name={props?.name || "name"}
+      name={props?.name ?? "name"}
       render={({ field }) => (
         <FormItem>
           {label && <FormLabel>{label}</FormLabel>}
+
           <FormControl>
             <Textarea {...props} {...field} className={cn(props.className)} />
           </FormControl>

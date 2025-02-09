@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+import { Button } from "@/common/components/atoms/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,10 +8,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import Avatar from "./Avatar";
+} from "@/common/components/atoms/ui/dropdown-menu";
 import React from "react";
 import { Link } from "react-router-dom";
+import { Avatar } from "../../atoms/ui/avatar";
 
 interface MenuItemType {
   label: string;
@@ -21,7 +21,7 @@ interface MenuItemType {
   href?: string;
 }
 
-export interface MenuGroupType {
+export interface AvatarMenuGroupType {
   label?: string;
   items: MenuItemType[];
 }
@@ -29,7 +29,7 @@ export interface MenuGroupType {
 export interface AvatarMenuProps {
   avatarSrc?: string;
   avatarFallback?: string;
-  menuGroups: MenuGroupType[];
+  menuGroups: AvatarMenuGroupType[];
 }
 
 const AvatarMenu = ({
@@ -46,7 +46,7 @@ const AvatarMenu = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" side="bottom">
         {menuGroups.map((group, groupIndex) => (
-          <React.Fragment key={groupIndex}>
+          <React.Fragment key={group.label}>
             {group.label && (
               <>
                 <DropdownMenuLabel>{group.label}</DropdownMenuLabel>
@@ -54,10 +54,10 @@ const AvatarMenu = ({
               </>
             )}
             <DropdownMenuGroup>
-              {group.items.map((item, itemIndex) => (
-                <Link to={item.href || ""} key={itemIndex}>
+              {group.items.map((item) => (
+                <Link to={item.href ?? ""} key={item.label}>
                   <DropdownMenuItem
-                    key={itemIndex}
+                    key={item.label}
                     disabled={item.disabled}
                     onClick={item.onClick}
                   >

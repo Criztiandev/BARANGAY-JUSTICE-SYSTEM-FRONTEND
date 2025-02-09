@@ -1,9 +1,10 @@
-import InputField from "@/common/components/molecules/form/InputField";
 import { Button } from "@/common/components/atoms/ui/button";
 import { Checkbox } from "@/common/components/atoms/ui/checkbox";
 import { FormBase } from "@/common/components/atoms/ui/form";
 import { XStack, YStack } from "@/common/components/atoms/ui/stack";
-import { useLogin } from "../hooks/mutation";
+import InputField from "@/common/components/molecules/form/input-field";
+import { Link } from "react-router-dom";
+import useLogin from "../hooks/use-login";
 
 const LoginPage = () => {
   const { form } = useLogin();
@@ -46,7 +47,7 @@ const LoginPage = () => {
                       <span>Remember me</span>
                     </XStack>
 
-                    <a href="#">Forgot password</a>
+                    <Link to="/forgot-password">Forgot password</Link>
                   </XStack>
 
                   <Button className="mb-8">Login</Button>

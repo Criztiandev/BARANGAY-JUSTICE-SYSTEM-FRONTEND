@@ -1,6 +1,5 @@
-import InputField from "@/common/components/molecules/form/InputField";
-import SelectField from "@/common/components/molecules/form/SelectField";
-
+import InputField from "@/common/components/molecules/form/input-field";
+import SelectField from "@/common/components/molecules/form/select-field";
 const CompliantInfoStep = () => {
   return (
     <div className="space-y-2 mt-4">

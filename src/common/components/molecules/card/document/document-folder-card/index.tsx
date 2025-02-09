@@ -27,7 +27,7 @@ const DocumentFolderCard = ({
     <Link {...props}>
       <Card className="p-2 hover:bg-accent cursor-pointer" onClick={onClick}>
         <CardContent className="flex gap-2 items-start justify-center w-full h-full flex-col p-2">
-          {icon && icon}
+          {icon}
           <div className="flex flex-col gap-4">
             <span className="text-lg font-medium">{title}</span>
             <div className="flex gap-2">

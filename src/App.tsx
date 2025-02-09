@@ -5,7 +5,7 @@ import userRoutes from "./feature/user/user.routes";
 import adminRoutes from "./feature/admin/admin.routes";
 import { AccountSchema } from "./feature/shared/account/interfaces/account.interface";
 import useInitializeAccount from "./feature/shared/account/hooks/useInitializeAccount";
-import LoadingScreen from "./common/components/template/helper/loading-screen";
+import LoadingScreen from "./common/components/atoms/helper/loading-screen/index.tsx";
 
 const roleMap: Record<AccountSchema["role"], any> = {
   user: userRoutes,

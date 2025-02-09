@@ -10,9 +10,9 @@ import {
 import { ErrorBoundary } from "react-error-boundary";
 import App from "./App.tsx";
 import { Toaster } from "sonner";
-import LoadingScreen from "./common/components/template/helper/loading-screen/index.tsx";
-import ErrorScreen from "./common/components/template/helper/error-screen/index.tsx";
 import { ThemeProvider } from "./common/components/template/providers/theme-provider/index.tsx";
+import LoadingScreen from "./common/components/atoms/helper/loading-screen/index.tsx";
+import ErrorScreen from "./common/components/atoms/helper/error-screen/index.tsx";
 
 const queryClient = new QueryClient();
 

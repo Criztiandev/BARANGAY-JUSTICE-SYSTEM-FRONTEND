@@ -1,12 +1,13 @@
-import InputField from "@/common/components/molecules/form/InputField";
 import { Button } from "@/common/components/atoms/ui/button";
 import { Checkbox } from "@/common/components/atoms/ui/checkbox";
 import { FormBase } from "@/common/components/atoms/ui/form";
 import { XStack, YStack } from "@/common/components/atoms/ui/stack";
-import { useLogin } from "../hooks/mutation";
+import InputField from "@/common/components/molecules/form/input-field";
+import { Link } from "react-router-dom";
+import useRegister from "../hooks/use-register";
 
 const RegisterPage = () => {
-  const { form } = useLogin();
+  const { form } = useRegister();
 
   const onSubmit = () => {};
 
@@ -60,12 +61,12 @@ const RegisterPage = () => {
                       <Checkbox />
                       <XStack className="space-x-2">
                         <span>Do you agree on your</span>
-                        <a
-                          href="#"
+                        <Link
+                          to="#"
                           className="text-blue-500 underline underline-offset-2"
                         >
                           Terms and Agreement
-                        </a>
+                        </Link>
                       </XStack>
                     </XStack>
                   </XStack>

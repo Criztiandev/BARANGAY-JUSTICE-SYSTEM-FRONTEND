@@ -1,4 +1,4 @@
-import { MenuItem } from "@/common/components/organism/layout-bar/sidebar/types";
+import { MenuItem } from "@/common/components/template/navigation/sidebar/types";
 import { Files, Home, MessageCircle, User } from "lucide-react";
 
 const userSidebarConfig: MenuItem[] = [

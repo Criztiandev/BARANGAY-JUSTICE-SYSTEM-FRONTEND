@@ -4,10 +4,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/common/components/atoms/ui/card";
-import { Mail, Phone, MapPin, MoreVertical, UserCog, Copy } from "lucide-react";
-import Avatar from "@/common/components/atoms/avatar/Avatar";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { XStack } from "@/common/components/atoms/ui/stack";
 import CaseCardMoreOption from "../../../dropdown/case/case-card-more-option";
+import { Avatar } from "@/common/components/atoms/ui/avatar";
 
 interface CasePartyInformationCardProps {
   title: string;
@@ -44,7 +44,7 @@ const CasePartyInformationCard = ({
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex items-center space-x-2">
-            <Avatar src={avatarSrc || ""} fallback={avatarFallback} />
+            <Avatar src={avatarSrc ?? ""} fallback={avatarFallback} />
             <div>
               <p className="font-medium">{name}</p>
               <p className="text-sm text-muted-foreground">{gender}</p>

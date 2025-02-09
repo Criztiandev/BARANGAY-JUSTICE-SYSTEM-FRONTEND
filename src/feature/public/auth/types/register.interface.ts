@@ -1,5 +1,5 @@
-import { IAccountSchema } from "@/feature/shared/account/account.interface";
+import { AccountSchema } from "@/feature/shared/account/interfaces/account.interface";
 
-export interface IRegisterValue extends IAccountSchema {
+export interface IRegisterValue extends AccountSchema {
   toa: boolean;
 }

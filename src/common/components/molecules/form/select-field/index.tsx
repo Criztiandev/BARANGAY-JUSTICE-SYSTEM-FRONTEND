@@ -4,7 +4,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../atoms/ui/select";
+} from "@/common/components/atoms/ui/select";
 
 import { FC, SelectHTMLAttributes } from "react";
 import { useFormContext } from "react-hook-form";
@@ -15,7 +15,7 @@ import {
   FormControl,
   FormDescription,
   FormMessage,
-} from "../../atoms/ui/form";
+} from "@/common/components/atoms/ui/form";
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
@@ -41,7 +41,7 @@ const SelectField: FC<Props> = ({
   return (
     <FormField
       control={form.control}
-      name={name || "name"}
+      name={name ?? "name"}
       render={({ field }) => (
         <FormItem>
           {label && <FormLabel>{label}</FormLabel>}

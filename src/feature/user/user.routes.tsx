@@ -4,10 +4,10 @@ import BaseLayout from "@/common/components/template/layout/base-layout";
 import userSidebarConfig from "./config/sidebar.config";
 import userMenuGroups from "./config/menu.config";
 import UserCaseScreen from "./page/cases";
-import NotFoundScreen from "@/common/components/template/helper/no-found";
 import UserDocumentScreen from "./page/documents";
 import ActivityScreen from "./page/activity";
 import CaseDetailsScreen from "./page/case-details";
+import NotFoundScreen from "@/common/components/atoms/helper/not-found-scren";
 
 const userRoutes = createBrowserRouter([
   {

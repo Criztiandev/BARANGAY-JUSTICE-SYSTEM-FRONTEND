@@ -4,24 +4,23 @@ import {
   SidebarGroup,
   SidebarProvider,
 } from "@/common/components/atoms/ui/sidebar";
-import { MenuItem } from "../../../organism/layout-bar/sidebar/types";
-import { MenuGroupType } from "../../../atoms/avatar/AvatarMenu";
-import Topbar from "../../../organism/layout-bar/topbar";
-import { NestedSidebar } from "../../../organism/layout-bar/sidebar/index";
+import { MenuItem } from "../../navigation/sidebar/types";
+import Topbar from "../../navigation/topbar";
+import { NestedSidebar } from "../../navigation/sidebar/index";
 import { Input } from "@/common/components/atoms/ui/input";
+import { AvatarMenuGroupType } from "@/common/components/molecules/avatar/AvatarMenu";
 
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/common/components/atoms/ui/breadcrumb";
 
 interface BaseLayoutProps {
-  menuGroups: MenuGroupType[];
   sidebarConfig: MenuItem[];
+  menuGroups: AvatarMenuGroupType[];
 }
 
 const BaseLayout = ({ sidebarConfig, menuGroups }: BaseLayoutProps) => {
