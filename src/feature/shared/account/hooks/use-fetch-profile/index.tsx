@@ -1,15 +1,9 @@
 import useSuspenseFetch from "@/common/hooks/query/useSuspenseFetch";
+import { Profile } from "../../interfaces/account.interface";
+import { SuccessResponse } from "@/feature/shared/other/interface/server.interface";
 
 const useFetchProfile = () => {
-  return useSuspenseFetch("/account/profile", {
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log("ERRORRRRRRR");
-      console.log(error);
-    },
-  });
+  return useSuspenseFetch<SuccessResponse<Profile>>("/account/profile");
 };
 
 export default useFetchProfile;

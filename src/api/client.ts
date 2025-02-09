@@ -67,7 +67,9 @@ api.interceptors.response.use(
       window.dispatchEvent(new CustomEvent("api-network-error"));
     }
 
-    return Promise.reject(error);
+    return Promise.reject(
+      error instanceof Error ? error : new Error(error?.message || "API Error")
+    );
   }
 );
 

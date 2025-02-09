@@ -20,4 +20,9 @@ export type Account = {
   deletedAt?: Date;
 };
 
+export type Profile = Pick<
+  Account,
+  "firstName" | "middleName" | "lastName" | "email"
+>;
+
 export type InitialAccount = Pick<Account, "_id" | "role">;

@@ -32,7 +32,7 @@ export const useLogin = () => {
 
       setItem(payload);
       setAccount(payload);
-      toast.success("Login successful");
+
       router("/");
     },
 

@@ -71,8 +71,8 @@ const toast = Object.assign(
 
     return sonnerToast(message, {
       position: "top-right",
-      duration: 3000,
       className: cn(selectedType),
+
       ...rest,
     });
   },

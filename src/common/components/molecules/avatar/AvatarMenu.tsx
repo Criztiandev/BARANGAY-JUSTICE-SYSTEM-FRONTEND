@@ -13,13 +13,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Avatar } from "../../atoms/ui/avatar";
 
-interface MenuItemType {
+interface BaseMenuItem {
   label: string;
   shortcut?: string;
   disabled?: boolean;
+}
+
+interface ClickableMenuItem extends BaseMenuItem {
   onClick?: () => void;
   href?: string;
+  component?: never;
 }
+
+interface CustomMenuItem extends BaseMenuItem {
+  component: React.ReactNode;
+  onClick?: never;
+  href?: never;
+}
+
+type MenuItemType = ClickableMenuItem | CustomMenuItem;
 
 export interface AvatarMenuGroupType {
   label?: string;
@@ -37,6 +49,39 @@ const AvatarMenu = ({
   avatarFallback = "CN",
   menuGroups,
 }: AvatarMenuProps) => {
+  const renderMenuItem = (item: MenuItemType) => {
+    if ("component" in item && item.component) {
+      return (
+        <div key={item.label} className="">
+          {item.component}
+        </div>
+      );
+    }
+
+    const menuItem = (
+      <DropdownMenuItem
+        key={item.label}
+        disabled={item.disabled}
+        onClick={item.onClick}
+      >
+        {item.label}
+        {item.shortcut && (
+          <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>
+        )}
+      </DropdownMenuItem>
+    );
+
+    if (item.href) {
+      return (
+        <Link to={item.href} key={item.label}>
+          {menuItem}
+        </Link>
+      );
+    }
+
+    return menuItem;
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -46,7 +91,7 @@ const AvatarMenu = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" side="bottom">
         {menuGroups.map((group, groupIndex) => (
-          <React.Fragment key={group.label}>
+          <React.Fragment key={group.label ?? groupIndex}>
             {group.label && (
               <>
                 <DropdownMenuLabel>{group.label}</DropdownMenuLabel>
@@ -54,22 +99,7 @@ const AvatarMenu = ({
               </>
             )}
             <DropdownMenuGroup>
-              {group.items.map((item) => (
-                <Link to={item.href ?? ""} key={item.label}>
-                  <DropdownMenuItem
-                    key={item.label}
-                    disabled={item.disabled}
-                    onClick={item.onClick}
-                  >
-                    {item.label}
-                    {item.shortcut && (
-                      <DropdownMenuShortcut>
-                        {item.shortcut}
-                      </DropdownMenuShortcut>
-                    )}
-                  </DropdownMenuItem>
-                </Link>
-              ))}
+              {group.items.map((item) => renderMenuItem(item))}
             </DropdownMenuGroup>
             {groupIndex < menuGroups.length - 1 && <DropdownMenuSeparator />}
           </React.Fragment>

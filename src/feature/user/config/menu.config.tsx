@@ -1,3 +1,5 @@
+import LogoutDialog from "@/common/components/molecules/dialog/logout-dialog";
+
 const userMenuGroups = [
   {
     label: "My Account",
@@ -11,9 +13,13 @@ const userMenuGroups = [
       {
         label: "Log out",
         shortcut: "⇧⌘Q",
-        onClick: () => {
-          console.log("hi");
-        },
+        component: (
+          <LogoutDialog
+            label="Log out"
+            title="Log out"
+            description="Are you sure you want to log out?"
+          />
+        ),
       },
     ],
   },
