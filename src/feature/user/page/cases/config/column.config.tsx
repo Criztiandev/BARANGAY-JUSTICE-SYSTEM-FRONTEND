@@ -1,10 +1,10 @@
 import { Badge } from "@/common/components/atoms/ui/badge";
-import { Case } from "../../../interface/case";
 import columnBuilder from "@/utils/table/column-builder.ts";
 import ActionColumn from "@/common/components/molecules/table/columns/action-column";
-import { DownloadIcon } from "lucide-react";
 import TextColumn from "@/common/components/molecules/table/columns/text-column";
 import ToggleColumn from "@/common/components/molecules/table/columns/toggle-column";
+import { Case } from "../types/query.types";
+import { useNavigate } from "react-router-dom";
 
 const caseColumns = columnBuilder<Case>([
   {
@@ -52,19 +52,17 @@ const caseColumns = columnBuilder<Case>([
   {
     id: "actions",
     header: () => <div className="text-center mx-auto">Actions</div>,
-    cell: () => {
+    cell: ({ row }) => {
+      const { _id } = row.original;
+      const navigate = useNavigate();
+
       return (
         <ActionColumn
-          actions={[
-            {
-              icon: <DownloadIcon size={16} />,
-              id: "Download",
-              onClick: () => {
-                alert("download");
-              },
-              isStashed: true,
+          defaultActions={{
+            view: {
+              onClick: () => navigate(`/cases/${_id}`),
             },
-          ]}
+          }}
         />
       );
     },

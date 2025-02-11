@@ -9,6 +9,7 @@ import ActivityScreen from "./page/activity";
 import CaseDetailsScreen from "./page/case-details";
 import NotFoundScreen from "@/common/components/atoms/helper/not-found-scren";
 import ProfileScreen from "../shared/account/page/profile";
+import ErrorScreen from "@/common/components/atoms/helper/error-screen";
 
 const userRoutes = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const userRoutes = createBrowserRouter([
         menuGroups={userMenuGroups}
       />
     ),
+    errorElement: <ErrorScreen onReset={() => {}} />,
     children: [
       { path: "", element: <UserDashboard /> },
       { path: "cases", element: <UserCaseScreen /> },

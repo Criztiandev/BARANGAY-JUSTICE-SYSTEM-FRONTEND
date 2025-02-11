@@ -21,9 +21,15 @@ const useLogout = () => {
     },
   });
 
+  const offlineLogout = () => {
+    removeItem();
+    setInitialAccount(null);
+  };
+
   return {
     logout: mutation.mutate,
     ...mutation,
+    offlineLogout,
   };
 };
 

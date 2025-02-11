@@ -22,7 +22,7 @@ import {
   FormMessage,
 } from "@/common/components/atoms/ui/form";
 
-interface DateFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface DateFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   description?: string;
 }

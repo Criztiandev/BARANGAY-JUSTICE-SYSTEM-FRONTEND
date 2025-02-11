@@ -1,5 +1,5 @@
-import { Case } from "@/feature/user/interface/case";
 import actionBuilder from "@/utils/table/action-builder.ts";
+import { Case } from "../types/query.types";
 
 const caseActionConfig = actionBuilder<Case>({
   // Search configuration

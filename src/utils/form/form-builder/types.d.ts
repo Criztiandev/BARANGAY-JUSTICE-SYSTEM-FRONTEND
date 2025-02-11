@@ -3,6 +3,7 @@ import { InputFieldProps } from "@/common/components/molecules/form/fields/input
 import { SelectFieldProps } from "@/common/components/molecules/form/fields/select-field";
 import { TextAreaFieldProps } from "@/common/components/molecules/form/fields/text-area-field";
 import { PasswordFieldProps } from "@/common/components/molecules/form/fields/password-field";
+import { DateFieldProps } from "@/common/components/molecules/form/fields/date-field";
 
 // Base type for all fields that ensures name is required
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };

@@ -24,7 +24,7 @@ interface BaseLayoutProps {
 }
 
 const BaseLayout = ({ sidebarConfig, menuGroups }: BaseLayoutProps) => {
-  const userRole = "admin"; // Example role, you might want to get this from your auth context
+  const userRole = "admin";
 
   const location = useLocation();
   const pathname = location.pathname;

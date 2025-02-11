@@ -4,26 +4,11 @@ import { FormProvider } from "react-hook-form";
 import caseColumns from "./config/column.config";
 import caseActionConfig from "./config/action.config";
 import CreateCaseSheet from "@/common/components/organism/sheet/case/create-case-sheet";
-export const data: any[] = [
-  {
-    id: "1",
-    caseNumber: "#2332",
-    caseType: "Civil",
-    filingDate: "2024-01-01",
-    status: "Active",
-    actions: "Actions",
-  },
-  {
-    id: "2",
-    caseNumber: "#2432",
-    caseType: "Not Civil",
-    filingDate: "2024-01-01",
-    status: "Active",
-  },
-];
+import useFetchAllCases from "./hooks/use-fetch-all-cases";
 
 export default function CasesPage() {
   const { form } = useCreateCase();
+  const { data: result } = useFetchAllCases();
 
   return (
     <div className="container mx-auto">
@@ -32,7 +17,7 @@ export default function CasesPage() {
       </div>
       <FormProvider {...form}>
         <DataTable
-          data={data}
+          data={result.payload.data}
           columns={caseColumns}
           actions={caseActionConfig}
           createAction={<CreateCaseSheet />}

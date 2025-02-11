@@ -25,7 +25,6 @@ const App = () => {
     useState<RouterProviderProps["router"]>(authRoutes);
 
   useEffect(() => {
-    console.log(account);
     if (account) {
       const _preferredRoute = getRouteByRole(account.role, roleMap);
       setRouter(_preferredRoute);

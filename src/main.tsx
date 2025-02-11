@@ -20,6 +20,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <Suspense fallback={<LoadingScreen />}>
+        <Toaster />
         <QueryErrorResetBoundary>
           {({ reset }) => (
             <ErrorBoundary
@@ -29,7 +30,6 @@ createRoot(document.getElementById("root")!).render(
               )}
             >
               <ThemeProvider>
-                <Toaster />
                 <App />
               </ThemeProvider>
             </ErrorBoundary>

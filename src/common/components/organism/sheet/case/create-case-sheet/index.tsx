@@ -9,61 +9,73 @@ import {
   DialogTrigger,
 } from "@/common/components/atoms/ui/dialog";
 
-import useMultiStepForm from "@/common/hooks/form/use-multi-step-form";
-import CompliantInfoStep from "./steps/compliant-info-step";
-import RespondentInfoStep from "./steps/respondent-info-step";
-import OtherInfoStep from "./steps/other-info-step";
-import { XStack } from "@/common/components/atoms/ui/stack";
+import FormBuilder from "@/utils/form/form-builder";
+import {
+  caseInfoStep,
+  compliantInfoStep,
+  defendantInfoStep,
+} from "./create-case.builder";
+
+import { useState } from "react";
+import ComboboxInput from "@/common/components/atoms/ui/combobox";
 
 const CreateCaseSheet = () => {
-  const { step, isFirstStep, isLastStep, next, back, currentStepIndex, steps } =
-    useMultiStepForm({
-      steps: [
-        <CompliantInfoStep key={"compliant"} />,
-        <RespondentInfoStep key={"respondent"} />,
-        <OtherInfoStep key={"other"} />,
-      ],
-    });
+  const [currentStep, setCurrentStep] = useState(0);
+  const steps = [
+    {
+      title: "Case Information",
+      component: <FormBuilder fields={caseInfoStep} />,
+    },
+    {
+      title: "Compliant Information",
+      component: <FormBuilder fields={compliantInfoStep} />,
+    },
+    {
+      title: "Defendant Information",
+      component: <FormBuilder fields={defendantInfoStep} />,
+    },
+  ];
 
-  const stepTitle = () => {
-    if (isFirstStep) {
-      return "Compliant Information";
-    }
+  const isFirstStep = currentStep === 0;
+  const isLastStep = currentStep === steps.length - 1;
 
-    if (isLastStep) {
-      return "Other Information";
-    }
-
-    return "Respondent Information";
-  };
+  const next = () =>
+    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+  const back = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button size="sm">Create</Button>
       </DialogTrigger>
-      <DialogContent className="px-4 max-w-2xl min-w-[500px]">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="flex justify-between items-center">
-            <span>{stepTitle()}</span>
-            <span className="text-sm text-muted-foreground pr-6">
-              {currentStepIndex + 1} / {steps.length}
+            <span>{steps[currentStep].title}</span>
+            <span className="text-sm text-muted-foreground">
+              {currentStep + 1} / {steps.length}
             </span>
           </DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Fill in the required information for your case.
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-2 mb-4">{step}</div>
+
+        <ComboboxInput />
+
+        <div className="py-4">{steps[currentStep].component}</div>
+
         <DialogFooter>
-          <XStack className="justify-between space-x-2">
+          <div className="flex gap-4 items-center">
             {!isFirstStep && (
               <Button variant="outline" onClick={back}>
                 Back
               </Button>
             )}
-            <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button>
-          </XStack>
+            <Button onClick={next} className="ml-auto">
+              {isLastStep ? "Submit" : "Next"}
+            </Button>
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>
