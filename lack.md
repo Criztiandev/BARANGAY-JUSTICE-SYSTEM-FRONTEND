@@ -12,3 +12,6 @@
 12. Date picket controlled and not controlled
 13. Charts integrations and easy to create
 14. add a ci/cd for deployment and testing
+
+--
+15. I am left with the sidebar and menu builder
