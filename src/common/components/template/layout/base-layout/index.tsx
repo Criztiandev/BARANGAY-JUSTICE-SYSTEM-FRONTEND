@@ -1,73 +1,54 @@
-import { Outlet, useLocation } from "react-router-dom";
 import {
-  Sidebar,
-  SidebarGroup,
+  SidebarInset,
   SidebarProvider,
+  SidebarTrigger,
 } from "@/common/components/atoms/ui/sidebar";
-import { MenuItem } from "../../navigation/sidebar/types";
-import Topbar from "../../navigation/topbar";
-import { NestedSidebar } from "../../navigation/sidebar/index";
-import { Input } from "@/common/components/atoms/ui/input";
-import { AvatarMenuGroupType } from "@/common/components/molecules/avatar/AvatarMenu";
 
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/common/components/atoms/ui/breadcrumb";
+import { Separator } from "@/common/components/atoms/ui/separator";
+import { AppSidebar } from "../../navigation/app-sidebar";
+import { Outlet, useLocation } from "react-router-dom";
+import { SidebarConfig } from "@/common/builder/sidebar-builder/types";
 
-interface BaseLayoutProps {
-  sidebarConfig: MenuItem[];
-  menuGroups: AvatarMenuGroupType[];
+interface Props {
+  readonly config: SidebarConfig;
 }
 
-const BaseLayout = ({ sidebarConfig, menuGroups }: BaseLayoutProps) => {
-  const userRole = "admin";
-
-  const location = useLocation();
-  const pathname = location.pathname;
+const BaseLayout = ({ config }: Props) => {
+  const { pathname } = useLocation();
 
   const breadcrumbItems = pathname.split("/").filter(Boolean);
 
   return (
     <SidebarProvider>
-      <div className="flex flex-col h-screen w-full">
-        <Topbar menuGroups={menuGroups} />
-        <div className="flex flex-1 overflow-hidden w-full  ">
-          <Sidebar className="h-full mt-[4.2rem] ">
-            <div className="px-4 pt-4">
-              <Input className="w-full" placeholder="Search" />
-            </div>
-
-            <SidebarGroup>
-              <NestedSidebar items={sidebarConfig} userRole={userRole} />
-            </SidebarGroup>
-          </Sidebar>
-
-          <main className="flex-1 overflow-auto p-4 pt-[4.2rem] mt-4 w-full">
-            <div className="pl-12 pb-2">
-              <Breadcrumb>
-                <BreadcrumbList>
-                  {breadcrumbItems.map((item) => (
-                    <>
-                      <BreadcrumbItem key={item}>
-                        <BreadcrumbLink href={`/${item}`}>
-                          {item}
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
-                      <BreadcrumbSeparator />
-                    </>
-                  ))}
-                </BreadcrumbList>
-              </Breadcrumb>
-            </div>
-
-            <Outlet />
-          </main>
-        </div>
-      </div>
+      <AppSidebar config={config} />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">{breadcrumbItems[0]}</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{breadcrumbItems[1]}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+        </header>
+        <Outlet />
+      </SidebarInset>
     </SidebarProvider>
   );
 };

@@ -1,14 +1,3 @@
-export class NetworkError extends Error {
-  constructor(
-    message = "Network Error",
-    public status = 0,
-    public code = "NETWORK_ERROR"
-  ) {
-    super(message);
-    this.name = "NetworkError";
-  }
-}
-
 export class ServerError extends Error {
   constructor(
     message = "Server Error",

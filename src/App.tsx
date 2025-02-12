@@ -6,7 +6,6 @@ import {
 import { useEffect, useState } from "react";
 import { getRouteByRole } from "./utils/other/getRouteByRole";
 import userRoutes from "./feature/user/user.routes";
-import adminRoutes from "./feature/admin/admin.routes";
 import { AccountSchema } from "./feature/shared/account/interfaces/account.interface";
 import useInitializeAccount from "./feature/shared/account/hooks/useInitializeAccount";
 import authRoutes from "@/feature/public/auth/auth.routes.tsx";
@@ -16,7 +15,7 @@ const roleMap: Record<
   ReturnType<typeof createBrowserRouter>
 > = {
   user: userRoutes,
-  admin: adminRoutes,
+  admin: userRoutes,
 };
 
 const App = () => {

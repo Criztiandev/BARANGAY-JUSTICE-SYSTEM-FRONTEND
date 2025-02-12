@@ -1,14 +1,12 @@
 import applicationConfig from "@/config/application.config";
 import axios from "axios";
-import {
-  NetworkError,
-  ServerError,
-  ServerNotRespondingError,
-} from "./network.class";
+import { ServerError, ServerNotRespondingError } from "./network.class";
 
 const api = axios.create({
   baseURL: applicationConfig.VITE_DEV_BACKEND_URI,
-  headers: { "Content-Type": "application/json" },
+  headers: {
+    "Content-Type": "application/json",
+  },
   withCredentials: true,
 });
 
