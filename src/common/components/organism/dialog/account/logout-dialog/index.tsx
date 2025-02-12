@@ -10,26 +10,25 @@ import {
   AlertDialogTrigger,
 } from "@/common/components/atoms/ui/alert-dialog";
 import { Button, ButtonProps } from "@/common/components/atoms/ui/button";
+import { LogOutIcon } from "lucide-react";
 import { memo, useCallback } from "react";
 
 interface Props extends ButtonProps {
-  caseId: string;
   label?: string;
 }
 
-export const ArchiveCaseDialog = memo(function ArchiveCaseDialog({
-  caseId,
-  label,
-  ...props
-}: Props) {
-  const handleArchive = useCallback(() => {
-    console.log("Archive case", caseId);
-  }, [caseId]);
+export const LogoutDialog = memo(function LogoutDialog({ label }: Props) {
+  const handleLogout = useCallback(() => {
+    console.log("Logout");
+  }, []);
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button {...props}>{label ?? "Archive"}</Button>
+        <Button variant="ghost" size="sm" className="w-full justify-start">
+          <LogOutIcon className="w-4 h-4" />
+          {label ?? "Logout"}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -41,9 +40,7 @@ export const ArchiveCaseDialog = memo(function ArchiveCaseDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleArchive}>
-            Continue
-          </AlertDialogAction>
+          <AlertDialogAction onClick={handleLogout}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

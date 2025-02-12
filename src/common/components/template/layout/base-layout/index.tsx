@@ -16,19 +16,19 @@ import { Separator } from "@/common/components/atoms/ui/separator";
 import { AppSidebar } from "../../navigation/app-sidebar";
 import { Outlet, useLocation } from "react-router-dom";
 import { SidebarConfig } from "@/common/builder/sidebar-builder/types";
-
 interface Props {
-  readonly config: SidebarConfig;
+  readonly sidebarConfig: SidebarConfig;
+  readonly menuConfig: MenuItemConfig[];
 }
 
-const BaseLayout = ({ config }: Props) => {
+const BaseLayout = ({ sidebarConfig, menuConfig }: Props) => {
   const { pathname } = useLocation();
 
   const breadcrumbItems = pathname.split("/").filter(Boolean);
 
   return (
     <SidebarProvider>
-      <AppSidebar config={config} />
+      <AppSidebar sidebarConfig={sidebarConfig} menuConfig={menuConfig} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">

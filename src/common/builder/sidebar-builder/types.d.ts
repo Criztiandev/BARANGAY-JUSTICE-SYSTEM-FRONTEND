@@ -39,11 +39,9 @@ export interface IconComponentProps {
 }
 
 interface SidebarConfig {
-  sections: Array<{
-    id: string;
-    title: string;
-    items: Array<SingleItemProps | GroupItemProps>;
-  }>;
+  id: string;
+  title: string;
+  items: Array<SingleItemProps | GroupItemProps>;
 }
 
 // SubItem should also have accessorKey

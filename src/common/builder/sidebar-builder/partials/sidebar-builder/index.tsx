@@ -12,12 +12,12 @@ export interface SidebarBuilderProps {
   config: SidebarConfig;
 }
 
-const SidebarSection = memo(
-  ({ section }: { section: SidebarConfig["sections"][0] }) => (
-    <SidebarGroup key={section.id}>
-      <SidebarGroupLabel>{section.title}</SidebarGroupLabel>
+export const SidebarBuilder = memo(({ config }: SidebarBuilderProps) => {
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>{config.title}</SidebarGroupLabel>
       <SidebarMenu>
-        {section.items.map((item, index) => (
+        {config.items.map((item, index) => (
           <SidebarItem
             key={`${item.accessorKey || item.title}-${index}`}
             {...item}
@@ -25,20 +25,6 @@ const SidebarSection = memo(
         ))}
       </SidebarMenu>
     </SidebarGroup>
-  )
-);
-
-SidebarSection.displayName = "SidebarSection";
-
-export const SidebarBuilder = memo(({ config }: SidebarBuilderProps) => {
-  if (!config?.sections?.length) return null;
-
-  return (
-    <>
-      {config.sections.map((section) => (
-        <SidebarSection key={section.id} section={section} />
-      ))}
-    </>
   );
 });
 
