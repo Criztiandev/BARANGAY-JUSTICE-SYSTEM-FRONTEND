@@ -4,7 +4,7 @@ import { FormProvider } from "react-hook-form";
 import caseColumns from "./config/column.config";
 import caseActionConfig from "./config/action.config";
 import CreateCaseSheet from "@/common/components/organism/sheet/case/create-case-sheet";
-import useFetchAllCases from "./hooks/use-fetch-all-cases";
+import useFetchAllCases from "./hooks/use-fetch-all-my-case";
 
 export default function CasesPage() {
   const { form } = useCreateCase();

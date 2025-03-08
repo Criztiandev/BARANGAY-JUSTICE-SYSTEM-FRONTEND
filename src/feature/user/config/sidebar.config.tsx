@@ -15,7 +15,7 @@ const sidebarConfig = sidebarHelper.createSection({
     },
     {
       type: "single",
-      title: "Cases",
+      title: "My Cases",
       href: "/cases",
       icon: FileText,
     },

@@ -16,7 +16,6 @@ const useLogout = () => {
     onSuccess: () => {
       removeItem();
       setInitialAccount(null);
-
       queryClient.invalidateQueries();
     },
   });

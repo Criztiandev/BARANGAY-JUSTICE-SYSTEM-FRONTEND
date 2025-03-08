@@ -6,15 +6,9 @@ import {
   useMutation,
 } from "@tanstack/react-query";
 import { ErrorResponse } from "@/feature/shared/other/interface/server.interface";
+import { toast } from "@/common/components/atoms/ui/sonner";
 
-type ExtendedError = Error & {
-  status?: number;
-  statusText?: string;
-  code?: string;
-  details?: {
-    message: string;
-  }[];
-};
+type ExtendedError = Error & ErrorResponse;
 
 interface UseMutateOptions<
   TData = unknown,
@@ -56,65 +50,20 @@ const useMutate = <TData = unknown, TVariables = unknown, TContext = unknown>(
       }
       return false;
     },
-    onError: (
-      error: unknown,
-      variables: TVariables,
-      context: TContext | undefined
-    ) => {
-      let finalError: ExtendedError;
-
-      if (error instanceof AxiosError) {
-        if (error.response) {
-          // Server returned an error response
-          const { error: errorMessage } = error.response.data as ErrorResponse;
-          finalError = new Error(
-            errorMessage || "Server error"
-          ) as ExtendedError;
-
-          const firstError =
-            error.response.data.details?.[0].message.toString() ||
-            error.response.data?.error ||
-            "Server error";
-
-          const upperCaseError =
-            firstError[0].toUpperCase() + firstError.slice(1).toLowerCase();
-
-          finalError.details = error.response.data.details;
-
-          finalError.status = error.response.status;
-          finalError.statusText = error.response.statusText;
-          finalError.message = upperCaseError;
-          finalError.details = error.response.data.details;
-        } else if (error.request) {
-          // Request was made but no response received
-          finalError = new Error(
-            error.code === "ECONNABORTED"
-              ? `Request timeout after ${timeout}ms`
-              : error.message || "No response received from the server"
-          ) as ExtendedError;
-          finalError.code = error.code;
-        } else {
-          // Error in request configuration
-          finalError = new Error(
-            error.message || "Request configuration error"
-          ) as ExtendedError;
-        }
-      } else {
-        finalError = new Error(
-          (error as Error)?.message || "An unknown error occurred"
-        ) as ExtendedError;
+    onError: (error: unknown) => {
+      if (!customErrorHandler && error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
       }
 
-      // Call custom error handler if provided
+      if (!customErrorHandler && error instanceof Error) {
+        toast.error(error.message);
+      }
+
       if (customErrorHandler) {
-        customErrorHandler(finalError);
+        customErrorHandler(error as ExtendedError);
       }
 
-      if (options.onError) {
-        options.onError(finalError, variables, context);
-      }
-
-      throw finalError;
+      throw error;
     },
   });
 };

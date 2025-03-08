@@ -3,7 +3,7 @@ export interface ErrorResponse {
   status: number;
 }
 
-export interface SuccessResponse<T> {
+export interface ResponseDTO<T> {
   payload: T;
   message: string;
 }

@@ -10,17 +10,16 @@ import {
   AlertDialogTrigger,
 } from "@/common/components/atoms/ui/alert-dialog";
 import { Button, ButtonProps } from "@/common/components/atoms/ui/button";
+import useLogout from "@/feature/shared/account/hooks/use-logout";
 import { LogOutIcon } from "lucide-react";
-import { memo, useCallback } from "react";
+import { memo } from "react";
 
 interface Props extends ButtonProps {
   label?: string;
 }
 
 export const LogoutDialog = memo(function LogoutDialog({ label }: Props) {
-  const handleLogout = useCallback(() => {
-    console.log("Logout");
-  }, []);
+  const { logout, isPending } = useLogout();
 
   return (
     <AlertDialog>
@@ -32,15 +31,17 @@ export const LogoutDialog = memo(function LogoutDialog({ label }: Props) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>Are you sure you want to logout?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            You will be logged out of your account and redirected to the login
+            page. Any unsaved changes will be lost.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleLogout}>Continue</AlertDialogAction>
+          <AlertDialogAction disabled={isPending} onClick={logout}>
+            {isPending ? "Logging out..." : "Logout"}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

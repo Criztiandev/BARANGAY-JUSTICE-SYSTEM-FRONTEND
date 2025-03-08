@@ -15,3 +15,7 @@
 
 --
 15. I am left with the sidebar and menu builder
+16 I did not finish the form builder
+17 I did  not finish the table builder
+18. How about page router like creating page it wil lautomatically set it
+19. improve the forgot password because it is not secured

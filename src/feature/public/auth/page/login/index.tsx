@@ -10,6 +10,7 @@ import AuthLayout from "@/common/components/template/layout/auth-layout";
 import { LoginRequestValue } from "../../types/login.interface";
 import { Label } from "@/common/components/atoms/ui/label";
 import { useLoginRememberMe } from "@/hooks/use-remember-me";
+import usePreventBackNavigation from "@/hooks/use-prevent-back-navigation";
 
 const LoginPage = () => {
   const { form, mutate } = useLogin();
@@ -35,6 +36,8 @@ const LoginPage = () => {
     }
     mutate(values);
   };
+
+  usePreventBackNavigation("/login", true);
 
   return (
     <AuthLayout
