@@ -1,19 +1,24 @@
 import { Button } from "@/common/components/atoms/ui/button";
 import { FormBase } from "@/common/components/atoms/ui/form";
 import { XStack } from "@/common/components/atoms/ui/stack";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import FormBuilder from "@/utils/form/form-builder";
-import forgotPasswordFormConfig from "./forgot-password.config";
 import AuthLayout from "@/common/components/template/layout/auth-layout";
-import useForgotPassword from "../../hooks/use-forgot-password";
-import { ForgotPasswordCredentials } from "../../types/forgot-password.interface";
+import changePasswordFormConfig from "./config/form.config";
+import usePreventBackNavigation from "@/hooks/use-prevent-back-navigation";
+import useChangePassword from "../../hooks/use-change-password";
+import { ChangePasswordCredentials } from "../../types/change-password.interface";
 
-const ForgotPasswordPage = () => {
-  const { form, mutate, isPending } = useForgotPassword();
+const ChangePasswordCheckpointPage = () => {
+  const { token } = useParams();
+  const { form, mutate, isPending } = useChangePassword(token ?? "");
 
-  const onSubmit = (payload: ForgotPasswordCredentials) => {
+  const onSubmit = (payload: ChangePasswordCredentials) => {
+    console.log(payload);
     mutate(payload);
   };
+
+  usePreventBackNavigation("/login", true);
 
   return (
     <AuthLayout
@@ -25,7 +30,7 @@ const ForgotPasswordPage = () => {
           className="flex flex-col gap-4 w-full"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <FormBuilder fields={forgotPasswordFormConfig} className="mb-4" />
+          <FormBuilder fields={changePasswordFormConfig} className="mb-4" />
 
           <Button disabled={isPending} className="mb-8">
             {isPending ? "Sending..." : "Submit"}
@@ -45,4 +50,4 @@ const ForgotPasswordPage = () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default ChangePasswordCheckpointPage;

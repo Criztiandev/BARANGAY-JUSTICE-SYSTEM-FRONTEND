@@ -21,7 +21,7 @@ api.interceptors.response.use(
     }
 
     const status = error.response.status;
-    const message = error.response.data?.message || "Server error";
+    const message = error.response.data?.error || "Server error";
 
     if (error.response.status === 401) {
       window.localStorage.removeItem("app:credentials");

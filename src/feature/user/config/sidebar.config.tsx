@@ -14,10 +14,20 @@ const sidebarConfig = sidebarHelper.createSection({
       icon: GitGraph,
     },
     {
-      type: "single",
-      title: "Cases",
-      href: "/cases",
-      icon: FileText,
+      type: "group",
+      title: "My Cases",
+      subItems: [
+        {
+          title: "My Complaints",
+          href: "/cases?type=complainant",
+          icon: FileText,
+        },
+        {
+          title: "Involved Parties",
+          href: "/cases?type=respondent",
+          icon: FileText,
+        },
+      ],
     },
   ],
 });

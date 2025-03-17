@@ -3,24 +3,24 @@ import useCreateCase from "../../hooks/case/use-create-case";
 import { FormProvider } from "react-hook-form";
 import caseColumns from "./config/column.config";
 import caseActionConfig from "./config/action.config";
-import CreateCaseSheet from "@/common/components/organism/sheet/case/create-case-sheet";
-import useFetchAllCases from "./hooks/use-fetch-all-cases";
+import useFetchAllCases from "./hooks/use-fetch-all-my-case";
+import CreateScheduleCaseSheet from "@/common/components/organism/sheet/case/create-schedule-case-sheet";
 
 export default function CasesPage() {
   const { form } = useCreateCase();
-  const { data: result } = useFetchAllCases();
+  const { result } = useFetchAllCases();
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-4xl font-bold">Cases</h3>
       </div>
       <FormProvider {...form}>
         <DataTable
-          data={result.payload.data}
+          data={result as any}
           columns={caseColumns}
           actions={caseActionConfig}
-          createAction={<CreateCaseSheet />}
+          createAction={<CreateScheduleCaseSheet />}
         />
       </FormProvider>
     </div>

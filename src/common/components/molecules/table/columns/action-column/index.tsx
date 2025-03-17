@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Button } from "@/common/components/atoms/ui/button";
-import { EyeIcon, Pencil, Trash, Download, MoreVertical } from "lucide-react";
+import {
+  EyeIcon,
+  Pencil,
+  Trash,
+  Download,
+  MoreVertical,
+  Check,
+  X,
+} from "lucide-react";
 import {
   AlertDialog,
   AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogAction,
-  AlertDialogCancel,
 } from "@/common/components/atoms/ui/alert-dialog";
 import {
   DropdownMenu,
@@ -55,6 +57,8 @@ const DEFAULT_ICONS = {
   edit: <Pencil className="h-4 w-4" />,
   delete: <Trash className="h-4 w-4" />,
   download: <Download className="h-4 w-4" />,
+  accept: <Check className="h-4 w-4" />,
+  reject: <X className="h-4 w-4" />,
 };
 
 const ActionColumn = ({
@@ -84,57 +88,6 @@ const ActionColumn = ({
       onClick: defaultActions.view?.onClick,
       component: defaultActions.view?.component,
       isStashed: defaultActions.view?.isStashed,
-    },
-    {
-      id: "edit",
-      icon: DEFAULT_ICONS.edit,
-      title: "Edit",
-      onClick: defaultActions.edit?.onClick,
-      component: defaultActions.edit?.component,
-      showModal: !defaultActions.edit?.component,
-      isStashed: defaultActions.edit?.isStashed,
-      modalContent: !defaultActions.edit?.component ? (
-        <>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Edit Item</AlertDialogTitle>
-            <AlertDialogDescription>
-              Make changes to your item here.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={defaultActions.edit?.onClick}>
-              Save changes
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </>
-      ) : undefined,
-    },
-    {
-      id: "delete",
-      icon: DEFAULT_ICONS.delete,
-      title: "Delete",
-      onClick: defaultActions.delete?.onClick,
-      component: defaultActions.delete?.component,
-      showModal: !defaultActions.delete?.component,
-      isStashed: defaultActions.delete?.isStashed,
-      modalContent: !defaultActions.delete?.component ? (
-        <>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={defaultActions.delete?.onClick}>
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </>
-      ) : undefined,
     },
   ];
 
