@@ -4,7 +4,7 @@ import UnsettledCasePieChart from "@/common/components/organism/chart/case/unset
 
 const UserDashboard = () => {
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto p-4">
       <HeroWidget />
       <div className="grid grid-cols-[auto_35%] gap-4">
         <TotalCaseBarChart />

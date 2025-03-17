@@ -28,6 +28,7 @@ const useForgotPassword = () => {
     onSuccess: ({ payload }) => {
       const { link } = payload;
       toast.success("Redirecting to the link...");
+      console.log(link);
       navigate({ pathname: link });
     },
   });

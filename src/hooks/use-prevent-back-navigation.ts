@@ -12,37 +12,7 @@ const usePreventBackNavigation = (
   redirectTo: string,
   enabled: boolean = true
 ) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    if (!enabled) return;
-
-    // Store the current location path in session storage when the component mounts
-    // or when location changes
-    const currentPath = location.pathname;
-    const storedPath = sessionStorage.getItem("lastPath");
-
-    if (storedPath && storedPath !== currentPath) {
-      // If there's a stored path and it's different from the current path,
-      // it means the user navigated (possibly by pressing back)
-      navigate(redirectTo, { replace: true });
-    }
-
-    // Update the stored path
-    sessionStorage.setItem("lastPath", currentPath);
-
-    // Additional protection: handle the popstate event
-    const handlePopState = () => {
-      navigate(redirectTo, { replace: true });
-    };
-
-    window.addEventListener("popstate", handlePopState);
-
-    return () => {
-      window.removeEventListener("popstate", handlePopState);
-    };
-  }, [location, navigate, redirectTo, enabled]);
+  console.log(redirectTo);
 };
 
 export default usePreventBackNavigation;
